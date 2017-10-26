@@ -9,6 +9,12 @@
 
 	*/
 class search extends Controller {
+	function __construct( $rootPath) {
+		$this->RequireValidation = \sys::lockdown();
+		parent::__construct( $rootPath);
+
+	}
+
 	function index() {
 		$this->ledger();
 

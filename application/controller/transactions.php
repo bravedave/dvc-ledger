@@ -46,6 +46,12 @@ class transactions extends Controller {
 
 	}
 
+	function __construct( $rootPath) {
+		$this->RequireValidation = \sys::lockdown();
+		parent::__construct( $rootPath);
+
+	}
+
 	function edit( $id = 0) {
 		$this->data = (object)[
 			'glt_date' => date( 'Y-m-d'),

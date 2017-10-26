@@ -91,6 +91,59 @@ class home extends Controller {
 
 	}
 
+	public function script() {
+		//~ $debug = FALSE;
+		$debug = TRUE;
+
+		Response::javascript_headers();
+
+		ob_start();
+
+		$jsFilePath = [$this->rootPath, 'app', 'views', 'js', '*.js'];
+		$jsFiles = implode( DIRECTORY_SEPARATOR, $jsFilePath);
+		//~ if ( $debug) \sys::logger( sprintf( ' reading :: %s', $jsFiles));
+		$gi = new GlobIterator( $jsFiles, FilesystemIterator::KEY_AS_FILENAME);
+
+		$_files = [];
+		foreach ($gi as $key => $item) {
+			if ( $key == 'primo.js')
+				array_unshift( $_files, $item->getRealPath());
+			else
+				$_files[] = $item->getRealPath();
+
+		}
+
+		foreach ( $_files as $_) {
+			if ( $debug) \sys::logger( sprintf( ' reading :: %s', $_));
+			include_once $_;
+			print PHP_EOL;
+
+		}
+		$out = ob_get_contents();
+		ob_end_clean();
+
+		if ( $debug || $this->Request->ClientIsLocal()) {
+			if ( $debug) \sys::logger( sprintf( ' not minifying jsCMS :: %s', $this->timer->elapsed()));
+			print $out;
+
+		}
+		else {
+			if ( $debug) \sys::logger( sprintf( 'jsCMS :: %s', $this->timer->elapsed()));
+
+			$minifier = new MatthiasMullie\Minify\JS;
+			$minifier->add( $out);
+			$minified =  $minifier->minify();
+
+			if ( $debug) \sys::logger( sprintf( 'jsCMS :: minified :: %s', $this->timer->elapsed()));
+
+			print $minified;
+
+			if ( $debug) \sys::logger( sprintf( 'jsCMS :: %s', $this->timer->elapsed()));
+
+		}
+
+	}
+
 	public function dbinfo() {
 		$p = new page('dbinfo');
 			$p
@@ -105,5 +158,10 @@ class home extends Controller {
 			$this->load('main-index');
 
 	}
+
+	//~ public function info() {
+		//~ phpinfo();
+
+	//~ }
 
 }

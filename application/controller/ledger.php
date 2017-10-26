@@ -18,6 +18,7 @@ class ledger extends Controller {
 			$a = [
 				'gl_description' => $this->getPost( 'gl_description'),
 				'gl_trading' => (int)$this->getPost( 'gl_trading'),
+				'gl_type' => (int)$this->getPost( 'gl_type'),
 			];
 
 			$dao = new dao\ledger;
@@ -48,6 +49,12 @@ class ledger extends Controller {
 			}
 
 		}
+
+	}
+
+	function __construct( $rootPath) {
+		$this->RequireValidation = \sys::lockdown();
+		parent::__construct( $rootPath);
 
 	}
 

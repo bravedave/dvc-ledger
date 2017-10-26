@@ -14,6 +14,7 @@ $dbc = new dbCheck( $this->db, 'ledger' );
 $dbc->defineField( 'gl_code', 'text');
 $dbc->defineField( 'gl_description', 'text');
 $dbc->defineField( 'gl_trading', 'int');
+$dbc->defineField( 'gl_type', 'text');
 $dbc->defineField( 'created', 'text');
 $dbc->check();
 
