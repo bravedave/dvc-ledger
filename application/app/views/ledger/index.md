@@ -4,6 +4,8 @@
 
 * [balance sheet](/ledger/balanceSheet/)
 
+* [trading](/ledger/trading/)
+
 * [transactions](/transactions/)
 
 ---

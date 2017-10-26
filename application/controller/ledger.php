@@ -124,6 +124,27 @@ class ledger extends Controller {
 
 	}
 
+	function trading() {
+		$dao = new dao\ledger;
+		$this->data = (object)[
+			'dtoSet' => $dao->trading()
+		];
+
+		//~ sys::dump( $this->data);
+
+		$p = new page( $this->title = 'trading statement');
+			$p
+				->header()
+				->title();
+
+			$p->primary();
+				$this->load('trading-statement');
+
+			$p->secondary();
+				$this->load('index');
+
+	}
+
 	protected function _index() {
 		$p = new page( $this->title = 'ledger');
 			$p

@@ -39,6 +39,24 @@ class ledger extends _dao {
 
 	}
 
+	function trading() {
+		$_sql = 'SELECT
+			gl_code, gl_description, gl_type, glt_value
+		FROM transactions
+			LEFT JOIN
+				ledger ON gl_code = glt_code
+		WHERE
+			ledger.gl_trading = 1
+		ORDER BY
+			gl_type';
+
+		if ( $res = $this->Result( $_sql))
+			return ( $res->dtoSet());
+
+		return ( FALSE);
+
+	}
+
 	function balanceSheet() {
 		$_sql = 'CREATE TEMPORARY TABLE
 			_t AS
