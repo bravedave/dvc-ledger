@@ -18,7 +18,7 @@ class ledger extends Controller {
 			$a = [
 				'gl_description' => $this->getPost( 'gl_description'),
 				'gl_trading' => (int)$this->getPost( 'gl_trading'),
-				'gl_type' => (int)$this->getPost( 'gl_type'),
+				'gl_type' => $this->getPost( 'gl_type'),
 			];
 
 			$dao = new dao\ledger;
@@ -97,6 +97,27 @@ class ledger extends Controller {
 
 			$p->primary();
 				$this->load('trial-balance');
+
+			$p->secondary();
+				$this->load('index');
+
+	}
+
+	function balanceSheet() {
+		$dao = new dao\ledger;
+		$this->data = (object)[
+			'dtoSet' => $dao->balanceSheet()
+		];
+
+		//~ sys::dump( $this->data);
+
+		$p = new page( $this->title = 'balance sheet');
+			$p
+				->header()
+				->title();
+
+			$p->primary();
+				$this->load('balance-sheet');
 
 			$p->secondary();
 				$this->load('index');

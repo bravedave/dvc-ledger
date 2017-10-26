@@ -11,6 +11,7 @@
 <table class="table table-striped table-sm">
 	<colgroup>
 		<col style="width: 7em;" />
+		<col style="width: 7em;" />
 		<col />
 		<col style="width: 12em;" />
 
@@ -19,6 +20,7 @@
 	<thead>
 		<tr>
 			<td>code</td>
+			<td>type</td>
 			<td>description</td>
 			<td class="text-center">value</td>
 		</tr>
@@ -31,6 +33,7 @@
 			$tot += (int)$dto->glt_value;	?>
 		<tr data-role="ledger-item" data-id="<?php print $dto->id ?>">
 			<td><?php print $dto->gl_code ?></td>
+			<td><?php print ( $dto->gl_trading ? 'Trade' : 'Balance') ?></td>
 			<td><?php print $dto->gl_description ?></td>
 			<td class="text-right"><?php print number_format( $dto->glt_value, 2) ?></td>
 
@@ -42,8 +45,7 @@
 
 	<tfoot>
 		<tr>
-			<td>&nbsp;</td>
-			<td>&nbsp;</td>
+			<td colspan="3">&nbsp;</td>
 			<td class="text-right"><?php print number_format( $tot, 2) ?></td>
 
 		</tr>

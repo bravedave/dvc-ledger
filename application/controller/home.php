@@ -92,8 +92,8 @@ class home extends Controller {
 	}
 
 	public function script() {
-		//~ $debug = FALSE;
-		$debug = TRUE;
+		$debug = FALSE;
+		//~ $debug = TRUE;
 
 		Response::javascript_headers();
 
@@ -101,7 +101,6 @@ class home extends Controller {
 
 		$jsFilePath = [$this->rootPath, 'app', 'views', 'js', '*.js'];
 		$jsFiles = implode( DIRECTORY_SEPARATOR, $jsFilePath);
-		//~ if ( $debug) \sys::logger( sprintf( ' reading :: %s', $jsFiles));
 		$gi = new GlobIterator( $jsFiles, FilesystemIterator::KEY_AS_FILENAME);
 
 		$_files = [];
@@ -123,22 +122,22 @@ class home extends Controller {
 		ob_end_clean();
 
 		if ( $debug || $this->Request->ClientIsLocal()) {
-			if ( $debug) \sys::logger( sprintf( ' not minifying jsCMS :: %s', $this->timer->elapsed()));
+			if ( $debug) \sys::logger( sprintf( 'home/script ::  not minifying jsCMS :: %s', $this->timer->elapsed()));
 			print $out;
 
 		}
 		else {
-			if ( $debug) \sys::logger( sprintf( 'jsCMS :: %s', $this->timer->elapsed()));
+			if ( $debug) \sys::logger( sprintf( 'home/script :: %s', $this->timer->elapsed()));
 
 			$minifier = new MatthiasMullie\Minify\JS;
 			$minifier->add( $out);
 			$minified =  $minifier->minify();
 
-			if ( $debug) \sys::logger( sprintf( 'jsCMS :: minified :: %s', $this->timer->elapsed()));
+			if ( $debug) \sys::logger( sprintf( 'home/script :: minified :: %s', $this->timer->elapsed()));
 
 			print $minified;
 
-			if ( $debug) \sys::logger( sprintf( 'jsCMS :: %s', $this->timer->elapsed()));
+			if ( $debug) \sys::logger( sprintf( 'home/script :: %s', $this->timer->elapsed()));
 
 		}
 
