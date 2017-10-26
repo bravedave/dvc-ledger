@@ -1,0 +1,4 @@
+application/data/db.json
+application/data/sqlite.db
+
+composer.lock
