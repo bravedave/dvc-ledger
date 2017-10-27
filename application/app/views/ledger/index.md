@@ -4,9 +4,10 @@
 
 * [balance sheet](/ledger/balanceSheet/)
 
-* [trading](/ledger/trading/)
+* [trading report](/ledger/trading/)
 
 * [transactions](/transactions/)
+  * [new transaction](/transactions/edit/)
 
 ---
 * [home](/)

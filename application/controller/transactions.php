@@ -12,6 +12,8 @@ class transactions extends Controller {
 	protected function postHandler() {
 		$action = $this->getPost('action');
 		if ( $action == 'save transaction') {
+			//~ sys::dump( $_POST);
+
 			$a = [
 				'glt_timestamp' => db::dbTimeStamp(),
 				'glt_date' => $this->getPost('glt_date'),
@@ -21,11 +23,16 @@ class transactions extends Controller {
 			$codes = $this->getPost( 'glt_code');
 			$comments = $this->getPost( 'glt_comment');
 			$values = $this->getPost( 'glt_value');
+			$gsts = $this->getPost( 'glt_gst');
+			$jnl = [];
 			if ( count( $codes) == count( $comments) && count( $codes) == count( $values)) {
 				for ( $i=0; $i < count( $codes); $i++) {
 					$a['glt_code'] = $codes[$i];
 					$a['glt_comment'] = $comments[$i];
 					$a['glt_value'] = $values[$i];
+					$a['glt_gst'] = $gsts[$i];
+
+					$jnl[] = (object)$a;
 
 					$dao->Insert( $a);
 
@@ -37,10 +44,9 @@ class transactions extends Controller {
 
 			}
 
+			//~ sys::dump( $jnl);
 			Response::redirect( 'transactions', 'posted transaction');
 
-			//~ sys::dump( $a);
-			//~ sys::dump( $_POST);
 
 		}
 
@@ -58,8 +64,15 @@ class transactions extends Controller {
 			'glt_refer' => '',
 			'lines' => [(object)[
 				'glt_code' => 'bank',
-				'glt_comment' => 'tools',
+				'glt_comment' => 'Bunnings Hardware',
+				'glt_value' => -110,
+				'glt_gst' => 0
+			],
+			(object)[
+				'glt_code' => 'expenses',
+				'glt_comment' => 'Hammer & Chisel',
 				'glt_value' => 100,
+				'glt_gst' => 10
 			]]
 		];
 
@@ -87,6 +100,8 @@ class transactions extends Controller {
 		$this->data = (object)[
 			'dtoSet' => $dao->getRecent()
 		];
+
+		//~ sys::dump( $this->data);
 
 		$p = new page( $this->title = 'transactions');
 			$p

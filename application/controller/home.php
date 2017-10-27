@@ -84,10 +84,24 @@ class home extends Controller {
 				$this->load( 'readme');
 
 			$p->secondary();
-
 				$this->load('main-index');
 
+
 		}
+
+	}
+
+	public function reports() {
+		$p = new page( $this->title = sys::name());
+		$p
+			->header()
+			->title()
+			->primary();
+
+			$this->load( 'reports');
+
+		$p->secondary();
+			$this->load('main-index');
 
 	}
 

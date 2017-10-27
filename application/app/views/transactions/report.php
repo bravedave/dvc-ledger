@@ -15,13 +15,22 @@
 		<col />
 		<col style="width: 7em" />
 		<col style="width: 7em" />
+		<col style="width: 6em" />
+		<col style="width: 6em" />
 	</colgroup>
 
 	<thead>
 		<tr>
+			<td colspan="3">&nbsp;</td>
+			<td colspan="2" class="text-center">transaction</td>
+			<td colspan="2" class="text-center">gst</td>
+		</tr>
+		<tr>
 			<td>code</td>
 			<td>date</td>
 			<td>description</td>
+			<td class="text-center">debit</td>
+			<td class="text-center">credit</td>
 			<td class="text-center">debit</td>
 			<td class="text-center">credit</td>
 		</tr>
@@ -32,19 +41,29 @@
 <?php	$tot = 0;
 		$debit = 0;
 		$credit = 0;
+		$totGST = 0;
+		$debitGST = 0;
+		$creditGST = 0;
 		foreach ( $this->data->dtoSet as $dto) {
-			$tot += $dto->glt_value;
-			if (  $dto->glt_value > 0)
-				$debit += $dto->glt_value;
+			$tot += (float)$dto->glt_value;
+			$totGST += (float)$dto->glt_gst;
+			if ( (float)$dto->glt_value > 0)
+				$debit += (float)$dto->glt_value;
 			else
-				$credit += $dto->glt_value;
+				$credit -= (float)$dto->glt_value;
+			if ( (float)$dto->glt_gst > 0)
+				$debitGST += (float)$dto->glt_gst;
+			else
+				$creditGST -= (float)$dto->glt_gst;
 			?>
 		<tr>
 			<td><?php print $dto->glt_code	?></td>
 			<td><?php print date( \config::$DATE_FORMAT, strtotime( $dto->glt_date))	?></td>
 			<td><?php print $dto->glt_comment	?></td>
-			<td class="text-right"><?php print ( $dto->glt_value > 0 ? number_format( $dto->glt_value, 2) : '&nbsp;' ) ?></td>
-			<td class="text-right"><?php print ( $dto->glt_value <= 0 ? number_format( $dto->glt_value, 2) : '&nbsp;' ) ?></td>
+			<td class="text-right"><?php print ( (float)$dto->glt_value > 0 ? number_format( -(float)$dto->glt_value, 2) : '&nbsp;' ) ?></td>
+			<td class="text-right"><?php print ( (float)$dto->glt_value < 0 ? number_format( (float)$dto->glt_value, 2) : '&nbsp;' ) ?></td>
+			<td class="text-right"><?php print ( (float)$dto->glt_gst > 0 ? number_format( (float)$dto->glt_gst, 2) : '&nbsp;' ) ?></td>
+			<td class="text-right"><?php print ( (float)$dto->glt_gst < 0 ? number_format( -(float)$dto->glt_gst, 2) : '&nbsp;' ) ?></td>
 
 		</tr>
 
@@ -56,9 +75,33 @@
 		<tr>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
+			<td class="text-right">debit/credit</td>
+			<td class="text-right"><?php print number_format( (float)$debit, 2) ?></td>
+			<td class="text-right"><?php print number_format( (float)$credit, 2) ?></td>
 			<td>&nbsp;</td>
-			<td class="text-right"><?php print number_format( $debit, 2) ?></td>
-			<td class="text-right"><?php print number_format( $credit, 2) ?></td>
+			<td>&nbsp;</td>
+
+		</tr>
+
+		<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td class="text-right">gst</td>
+			<td class="text-right"><?php print number_format( (float)$debitGST, 2) ?></td>
+			<td class="text-right"><?php print number_format( (float)$creditGST, 2) ?></td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+
+		</tr>
+
+		<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td class="text-right">total</td>
+			<td class="text-right"><?php print number_format( (float)$debitGST + (float)$debit, 2) ?></td>
+			<td class="text-right"><?php print number_format( (float)$creditGST + (float)$credit, 2) ?></td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
 
 		</tr>
 

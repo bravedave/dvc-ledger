@@ -4,6 +4,8 @@
 
 * [ledger](/ledger/)
 
+* [reports](/reports/)
+
 * [users](/users/)
 
 * [settings](/settings/)

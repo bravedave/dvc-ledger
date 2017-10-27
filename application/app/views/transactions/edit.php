@@ -15,6 +15,7 @@
 			<col style="width: 20rem;" />
 			<col />
 			<col style="width: 10rem;" />
+			<col style="width: 10rem;" />
 
 		</colgroup>
 
@@ -25,6 +26,7 @@
 					<input type="text" class="form-control" name="glt_date" value="<?php print $this->data->glt_date ?>" />
 
 				</td>
+				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 
@@ -38,6 +40,7 @@
 				</td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
+				<td>&nbsp;</td>
 
 			</tr>
 
@@ -45,6 +48,7 @@
 				<td>code</td>
 				<td colspan="2">description</td>
 				<td>value</td>
+				<td>gst</td>
 
 			</tr>
 
@@ -56,6 +60,7 @@
 			printf( '<td><input type="text" class="form-control" name="glt_code[]" value="%s" /></td>', $l->glt_code);
 			printf( '<td colspan="2"><input type="text" class="form-control" name="glt_comment[]" value="%s" /></td>', $l->glt_comment);
 			printf( '<td><input type="text" class="form-control text-right" name="glt_value[]" value="%s" /></td>', $l->glt_value);
+			printf( '<td><input type="text" class="form-control text-right" name="glt_gst[]" value="%s" /></td>', $l->glt_gst);
 			print '</tr>';
 		}	?>
 		</tbody>
@@ -64,8 +69,19 @@
 			<tr>
 				<td><a href="#" data-role="add-line">[add line]</a></td>
 				<td>&nbsp;</td>
+				<td class="text-right">GST</td>
+				<td class="text-right" data-role="gst">&nbsp;</td>
+				<td>&nbsp;</td>
+
+			</tr>
+
+			<tr>
 				<td class="text-right"><input class="btn btn-default" data-role="save-button" type="submit" name="action" value="save transaction" /></td>
+				<td>&nbsp;</td>
+				<td class="text-right">Journal Total</td>
 				<td class="text-right" data-role="total">&nbsp;</td>
+				<td>&nbsp;</td>
+
 			</tr>
 
 		</tfoot>
@@ -77,15 +93,26 @@
 $(document).ready( function() {
 	function totLines() {
 		var tot = 0
-		var lines = $('#glt-journal tbody input[name="glt_value[]"]');
+		var gst = 0
+		var lines = $('#glt-journal tbody tr');
 		if ( lines.length > 0) {
 			lines.each( function( i, el) {
-				var _el = $(el);
-				var v = Number( _el.val());
+				var gltValue = $('input[name="glt_value[]"]', el);
+				var v = Number( gltValue.val());
 				if ( isNaN(v))
 					v = 0;
-				_el.val( v.formatCurrency());
+				gltValue.val( v.formatCurrency());
 				tot += v;
+
+				var gstValue = $('input[name="glt_gst[]"]', el);
+				var g = Number( gstValue.val());
+				if ( isNaN(v))
+					g = 0;
+				gstValue.val( g.formatCurrency());
+				gst += g;
+				tot += g;
+
+				//~ console.log( v, g);
 
 			});
 
@@ -96,6 +123,7 @@ $(document).ready( function() {
 			$('input[data-role="save-button"]').prop( 'disabled', true);
 
 		}
+		$('#glt-journal tfoot td[data-role="gst"]').html( gst.formatCurrency());
 		$('#glt-journal tfoot td[data-role="total"]').html( tot.formatCurrency());
 		return ( tot);
 
@@ -106,8 +134,10 @@ $(document).ready( function() {
 		var tr = _el.closest( 'tr');
 		var comment = $( 'input[name="glt_comment[]"]', tr);
 		var value = $( 'input[name="glt_value[]"]', tr);
+		var gst = $( 'input[name="glt_gst[]"]', tr);
 
 		value.on('change', totLines);
+		gst.on('change', totLines);
 
 		_el.autocomplete({
 			autoFocus : true,
@@ -124,7 +154,7 @@ $(document).ready( function() {
 			select: function(event, ui) {
 				var o = ui.item;
 				comment.val( o.label);
-				value.focus()
+				setTimeout( function() { value.focus()}, 100);
 
 			}
 

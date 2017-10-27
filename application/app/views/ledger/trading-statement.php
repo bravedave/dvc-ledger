@@ -19,7 +19,7 @@
 	<thead>
 		<tr>
 			<td>description</td>
-			<td>open</td>
+			<td class="text-center">last</td>
 			<td class="text-center">current</td>
 		</tr>
 
@@ -40,14 +40,14 @@
 				printf( '<tr><td colspan="3" class="bold">%s</td></tr>', trading::type( $type));
 
 			}
-			$stot += $dto->glt_value;
-			$tot += $dto->glt_value;
+			$stot -= (float)$dto->glt_value;
+			$tot -= (float)$dto->glt_value;
 
 		?>
 		<tr>
 			<td><?php print $dto->gl_description ?></td>
 			<td></td>
-			<td class="text-right"><?php print number_format( $dto->glt_value, 2) ?></td>
+			<td class="text-right"><?php print number_format( -(float)$dto->glt_value, 2) ?></td>
 
 		</tr>
 
@@ -64,7 +64,7 @@
 	<tfoot>
 		<tr>
 			<td>&nbsp;</td>
-			<td>&nbsp;</td>
+			<td class="text-right"><?php printf( 'trading %s', ( $tot < 0 ? 'deficit' : 'surplus' )) ?></td>
 			<td class="text-right"><?php print number_format( $tot, 2) ?></td>
 
 		</tr>

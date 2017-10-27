@@ -5,4 +5,6 @@
 ---
 * [ledger](/ledger/)
 
+* [reports](/reports/)
+
 * [home](/)
