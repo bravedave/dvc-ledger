@@ -1,6 +1,7 @@
 #### [transactions](/transactions/)
 
-* [new transaction](/transactions/edit/)
+* [pay](/transactions/pay/)
+* [journal](/transactions/edit/)
 
 ---
 * [ledger](/ledger/)

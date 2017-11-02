@@ -9,7 +9,7 @@
 
 	*/	?>
 <form method="POST" action="<?php url::write( 'transactions') ?>">
-	<input type="hidden" name="glt_type" value="journal" />
+	<input type="hidden" name="glt_type" value="payment" />
 	<table class="table table-striped" id="glt-journal">
 		<colgroup>
 			<col style="width: 10rem;" />
@@ -46,6 +46,42 @@
 			</tr>
 
 			<tr>
+				<td>source</td>
+				<td>
+					<input type="text" class="form-control" name="h_glt_code" value="<?php print $this->data->glt_code ?>" />
+
+				</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+
+			</tr>
+
+			<tr>
+				<td>value</td>
+				<td>
+					<input type="text" class="form-control" name="h_glt_value" value="<?php print $this->data->glt_value ?>" />
+
+				</td>
+				<td class="text-right">gst</td>
+				<td>
+					<input type="text" class="form-control" name="h_glt_gst" value="<?php print $this->data->glt_gst ?>" />
+
+				</td>
+				<td>&nbsp;</td>
+
+			</tr>
+
+			<tr>
+				<td>payee</td>
+				<td colspan="4">
+					<input type="text" class="form-control" name="h_glt_comment" value="<?php print $this->data->glt_comment ?>" />
+
+				</td>
+
+			</tr>
+
+			<tr>
 				<td>code</td>
 				<td colspan="2">description</td>
 				<td>value</td>
@@ -64,13 +100,13 @@
 			printf( '<td><input type="text" class="form-control text-right" name="glt_gst[]" value="%s" /></td>', $l->glt_gst);
 			print '</tr>';
 		}	?>
+
 		</tbody>
 
 		<tfoot>
 			<tr>
 				<td><a href="#" data-role="add-line">[add line]</a></td>
-				<td>&nbsp;</td>
-				<td class="text-right">GST</td>
+				<td class="text-right" colspan="2">GST</td>
 				<td class="text-right" data-role="gst">&nbsp;</td>
 				<td>&nbsp;</td>
 
@@ -78,8 +114,7 @@
 
 			<tr>
 				<td class="text-right"><input class="btn btn-default" data-role="save-button" type="submit" name="action" value="save transaction" /></td>
-				<td>&nbsp;</td>
-				<td class="text-right">Journal Total</td>
+				<td class="text-right" colspan="2">un allocated</td>
 				<td class="text-right" data-role="total">&nbsp;</td>
 				<td>&nbsp;</td>
 
@@ -91,10 +126,24 @@
 
 </form>
 <script>
-$(document).ready( function() {
 	function totLines() {
 		var tot = 0
 		var gst = 0
+		var gltValue = $('thead input[name="h_glt_value"]');
+		var v = Number( gltValue.val());
+		if ( isNaN( v))
+			v = 0;
+		tot += v;
+		gltValue.val( v.formatCurrency());
+
+		var gstValue = $('thead input[name="h_glt_gst"]');
+		var g = Number( gstValue.val());
+		if ( isNaN( g))
+			g = 0;
+		gstValue.val( g.formatCurrency());
+
+		//~ return ( tot);
+
 		var lines = $('#glt-journal tbody tr');
 		if ( lines.length > 0) {
 			lines.each( function( i, el) {
@@ -103,15 +152,15 @@ $(document).ready( function() {
 				if ( isNaN(v))
 					v = 0;
 				gltValue.val( v.formatCurrency());
-				tot += v;
+				tot -= v;
 
 				var gstValue = $('input[name="glt_gst[]"]', el);
 				var g = Number( gstValue.val());
 				if ( isNaN(v))
 					g = 0;
 				gstValue.val( g.formatCurrency());
-				gst += g;
-				tot += g;
+				gst -= g;
+				tot -= g;
 
 				//~ console.log( v, g);
 
@@ -124,51 +173,17 @@ $(document).ready( function() {
 			$('input[data-role="save-button"]').prop( 'disabled', true);
 
 		}
-		$('#glt-journal tfoot td[data-role="gst"]').html( gst.formatCurrency());
-		$('#glt-journal tfoot td[data-role="total"]').html( tot.formatCurrency());
+		$('#glt-journal tfoot td[data-role="gst"]').html( (-gst).formatCurrency());
+		$('#glt-journal tfoot td[data-role="total"]').html( (-tot).formatCurrency());
 		return ( tot);
 
 	}
 
-	$('#glt-journal tbody input[name="glt_code[]"]').each( function( i, el) {
-		var _el = $(el);
-		var tr = _el.closest( 'tr');
-		var comment = $( 'input[name="glt_comment[]"]', tr);
-		var value = $( 'input[name="glt_value[]"]', tr);
-		var gst = $( 'input[name="glt_gst[]"]', tr);
 
-		value.on('change', totLines);
-		gst.on('change', totLines);
 
-		_el.autocomplete({
-			autoFocus : true,
-			source: function( request, response ) {
-				$.ajax({
-					url : _brayworth_.urlwrite( 'search/ledger'),
-					data : { term: request.term },
-					success: response,
-
-				})
-
-			},
-			minLength: 2,
-			select: function(event, ui) {
-				var o = ui.item;
-				comment.val( o.label);
-				setTimeout( function() { value.focus()}, 100);
-
-			}
-
-		})
-
-	});
-
+$(document).ready( function() {
 	$('input[name="glt_date"]').calendarHelper();
-	$('input[name="glt_date"]').closest('form').on('submit', function( e) {
-		totLines();
-		return ( !$('input[data-role="save-button"]').prop( 'disabled'));
-
-	});
+	$('input[data-role="save-button"]').prop( 'disabled', true);
 
 	$('a[data-role="add-line"]').each( function( i, el) {
 		var _el = $(el);
@@ -211,8 +226,6 @@ $(document).ready( function() {
 		})
 
 	});
-
-	totLines();	// disable submit button
 
 });
 </script>

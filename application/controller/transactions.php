@@ -16,6 +16,7 @@ class transactions extends Controller {
 
 			$a = [
 				'glt_timestamp' => db::dbTimeStamp(),
+				'glt_type' => $this->getPost('glt_type'),
 				'glt_date' => $this->getPost('glt_date'),
 				'glt_refer' => $this->getPost('glt_refer')];
 
@@ -82,7 +83,7 @@ class transactions extends Controller {
 
 		//~ }
 
-		$p = new page( $this->title = 'created / edit transaction');
+		$p = new page( $this->title = 'create / edit transaction');
 			$p
 				->header()
 				->title();
@@ -93,6 +94,34 @@ class transactions extends Controller {
 			$p->secondary();
 				$this->load('index');
 
+	}
+
+	public function pay() {
+		$this->data = (object)[
+			'glt_date' => date( 'Y-m-d'),
+			'glt_code' => 'bank',
+			'glt_refer' => '',
+			'glt_value' => 110,
+			'glt_gst' => 10,
+			'glt_comment' => 'Bunnings Hardware',
+			'lines' => [(object)[
+				'glt_code' => 'expenses',
+				'glt_comment' => 'Hammer & Chisel',
+				'glt_value' => 100,
+				'glt_gst' => 10
+			]]
+		];
+
+		$p = new page( $this->title = 'pay');
+			$p
+				->header()
+				->title();
+
+			$p->primary();
+				$this->load('pay');
+
+			$p->secondary();
+				$this->load('index');
 	}
 
 	protected function _index() {

@@ -12,6 +12,7 @@ Namespace dvc\sqlite;
 
 $dbc = new dbCheck( $this->db, 'transactions' );
 $dbc->defineField( 'glt_code', 'text');
+$dbc->defineField( 'glt_type', 'text');
 $dbc->defineField( 'glt_date', 'text');
 $dbc->defineField( 'glt_refer', 'text');
 $dbc->defineField( 'glt_timestamp', 'text');
