@@ -1,11 +1,14 @@
 <?php
-/*
+/**
 	David Bray
 	BrayWorth Pty Ltd
 	e. david@brayworth.com.au
 
 	This work is licensed under a Creative Commons Attribution 4.0 International Public License.
 		http://creativecommons.org/licenses/by/4.0/
+
+	Description:
+		Payment Form
 
 	*/	?>
 <form method="POST" action="<?php url::write( 'transactions') ?>">
@@ -27,9 +30,7 @@
 					<input type="text" class="form-control" name="glt_date" value="<?php print $this->data->glt_date ?>" />
 
 				</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
+				<td colspan="3">&nbsp;</td>
 
 			</tr>
 
@@ -39,21 +40,17 @@
 					<input type="text" class="form-control" name="glt_refer" value="<?php print $this->data->glt_refer ?>" />
 
 				</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
+				<td colspan="3">&nbsp;</td>
 
 			</tr>
 
 			<tr>
 				<td>source</td>
 				<td>
-					<input type="text" class="form-control" name="h_glt_code" value="<?php print $this->data->glt_code ?>" />
+					<input type="text" class="form-control" name="h_glt_code" id="h_glt_code" value="<?php print $this->data->glt_code ?>" />
 
 				</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
+				<td colspan="3">&nbsp;</td>
 
 			</tr>
 
@@ -162,10 +159,11 @@
 				gst -= g;
 				tot -= g;
 
-				//~ console.log( v, g);
+				// console.log( v, g);
 
 			});
 
+			// console.log( 'v, g');
 			$('input[data-role="save-button"]').prop( 'disabled', tot != 0);
 
 		}
@@ -208,9 +206,9 @@ $(document).ready( function() {
 					$.ajax({
 						url : _brayworth_.urlwrite( 'search/ledger'),
 						data : { term: request.term },
-						success: response,
 
 					})
+					.done( response);
 
 				},
 				minLength: 2,
@@ -225,7 +223,30 @@ $(document).ready( function() {
 
 		})
 
+		$('#h_glt_code').autocomplete({
+			autoFocus : true,
+			source: function( request, response ) {
+				$.ajax({
+					url : _brayworth_.urlwrite( 'search/ledger'),
+					data : { term: request.term },
+
+				})
+				.done( response);
+
+			},
+			minLength: 2,
+			select: function(event, ui) {
+				var o = ui.item;
+				//~ comment.val( o.label);
+				value.focus()
+
+			}
+
+		})
+
 	});
+
+	totLines();	// disable submit button
 
 });
 </script>

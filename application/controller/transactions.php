@@ -1,11 +1,17 @@
 <?php
-/*
+/**
 	David Bray
 	BrayWorth Pty Ltd
 	e. david@brayworth.com.au
 
 	This work is licensed under a Creative Commons Attribution 4.0 International Public License.
 		http://creativecommons.org/licenses/by/4.0/
+
+	Descripton:
+		Class for handling general transactions including
+		- reporting
+		- payments
+		- journals
 
 	*/
 class transactions extends Controller {
@@ -21,6 +27,16 @@ class transactions extends Controller {
 				'glt_refer' => $this->getPost('glt_refer')];
 
 			$dao = new dao\transactions;
+			if ( 'payment' === $a['glt_type']) {
+				$a['glt_code'] = $this->getPost('h_glt_code');
+		    $a['glt_value'] = (float)$this->getPost('h_glt_value') * -1;
+		    // $a['glt_gst'] = $this->getPost('h_glt_gst');
+		    $a['glt_comment'] = $this->getPost('h_glt_comment');
+				$dao->Insert( $a);
+
+				// sys::dump( $_POST);
+
+			}
 			$codes = $this->getPost( 'glt_code');
 			$comments = $this->getPost( 'glt_comment');
 			$values = $this->getPost( 'glt_value');
