@@ -46,8 +46,7 @@
 		<div class="row form-group">
 			<div class="col-xs-3">Password</div>
 			<div class="col-xs-9">
-				<input type="password" name="pass" class="form-control" placeholder="password - if you want to change it .."
-					required />
+				<input type="password" name="pass" class="form-control" placeholder="password - if you want to change it .." />
 
 			</div>
 
