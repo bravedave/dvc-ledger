@@ -43,9 +43,9 @@ class home extends Controller {
 		$action = $this->getPost( 'action');
 		if ( $action == '-system-logon-') {
 			/**
-			it might not be firstRun and it might not be lockdown
-			but if a page requiring authentication it will request
-			it through the home page, so process it ..*/
+			 * it might not be firstRun and it might not be lockdown
+			 * but if a page requiring authentication it will request
+			 * it through the home page, so process it ..*/
 			$this->_authorize();
 			return;
 
@@ -60,6 +60,8 @@ class home extends Controller {
 			$this->RequireValidation = FALSE;
 		else
 			$this->RequireValidation = \sys::lockdown();
+
+		page::$addScripts = ( !$this->RequireValidation || $this->authorised);
 
 		parent::__construct( $rootPath);
 
