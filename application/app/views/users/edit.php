@@ -13,8 +13,8 @@
 		<input type="hidden" name="id" value="<?php print $this->data->dto->id ?>" />
 
 		<div class="row form-group">
-			<div class="col-xs-3">UserName</div>
-			<div class="col-xs-9">
+			<div class="col-3">UserName</div>
+			<div class="col-9">
 				<input type="text" name="username" class="form-control" placeholder="username"
 					value="<?php print $this->data->dto->username ?>" required
 					<?php if ( $this->data->dto->id) print 'disabled'; ?> />
@@ -24,8 +24,8 @@
 		</div>
 
 		<div class="row form-group">
-			<div class="col-xs-3">Name</div>
-			<div class="col-xs-9">
+			<div class="col-3">Name</div>
+			<div class="col-9">
 				<input type="text" name="name" class="form-control" placeholder="name" required
 					autofocus value="<?php print $this->data->dto->name ?>" />
 
@@ -34,8 +34,8 @@
 		</div>
 
 		<div class="row form-group">
-			<div class="col-xs-3">Email</div>
-			<div class="col-xs-9">
+			<div class="col-3">Email</div>
+			<div class="col-9">
 				<input type="text" name="email" class="form-control" placeholder="email"
 					value="<?php print $this->data->dto->email ?>" required />
 
@@ -44,8 +44,8 @@
 		</div>
 
 		<div class="row form-group">
-			<div class="col-xs-3">Password</div>
-			<div class="col-xs-9">
+			<div class="col-3">Password</div>
+			<div class="col-9">
 				<input type="password" name="pass" class="form-control" placeholder="password - if you want to change it .." />
 
 			</div>
@@ -53,7 +53,7 @@
 		</div>
 
 		<div class="row form-group">
-			<div class="col-xs-9 col-xs-offset-3">
+			<div class="col-9 col-offset-3">
 				<input  class="btn btn-primary" type="submit" name="action" value="save/update" />
 
 			</div>
