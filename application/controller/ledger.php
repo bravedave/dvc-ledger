@@ -69,20 +69,14 @@ class ledger extends Controller {
 
 		}
 
-		$p = new page( $this->title = 'create / edit account');
-			$p
-				->header()
-				->title();
-
-			$p->primary();
-				$this->load('edit');
-
-			$p->secondary();
-				$this->load('index');
+		$this->render([
+			'title' => $this->title = 'create / edit account',
+			'primary' => 'edit',
+			'secondary' => 'index']);
 
 	}
 
-	function trial() {
+	public function trial() {
 		$dao = new dao\ledger;
 		$this->data = (object)[
 			'dtoSet' => $dao->trialBalance()
@@ -90,20 +84,14 @@ class ledger extends Controller {
 
 		//~ sys::dump( $this->data);
 
-		$p = new page( $this->title = 'trial balance');
-			$p
-				->header()
-				->title();
-
-			$p->primary();
-				$this->load('trial-balance');
-
-			$p->secondary();
-				$this->load('index');
+		$this->render([
+			'title' => $this->title = 'trial balance',
+			'primary' => 'trial-balance',
+			'secondary' => 'index']);
 
 	}
 
-	function balanceSheet() {
+	public function balanceSheet() {
 		$dao = new dao\ledger;
 		$this->data = (object)[
 			'dtoSet' => $dao->balanceSheet()
@@ -111,20 +99,14 @@ class ledger extends Controller {
 
 		//~ sys::dump( $this->data);
 
-		$p = new page( $this->title = 'balance sheet');
-			$p
-				->header()
-				->title();
-
-			$p->primary();
-				$this->load('balance-sheet');
-
-			$p->secondary();
-				$this->load('index');
+		$this->render([
+			'title' => $this->title = 'balance sheet',
+			'primary' => 'balance-sheet',
+			'secondary' => 'index']);
 
 	}
 
-	function trading() {
+	public function trading() {
 		$dao = new dao\ledger;
 		$this->data = (object)[
 			'dtoSet' => $dao->trading()
@@ -132,40 +114,25 @@ class ledger extends Controller {
 
 		//~ sys::dump( $this->data);
 
-		$p = new page( $this->title = 'trading statement');
-			$p
-				->header()
-				->title();
-
-			$p->primary();
-				$this->load('trading-statement');
-
-			$p->secondary();
-				$this->load('index');
+		$this->render([
+			'title' => $this->title = 'trading statement',
+			'primary' => 'trading-statement',
+			'secondary' => 'index']);
 
 	}
 
 	protected function _index() {
-		$p = new page( $this->title = 'ledger');
-			$p
-				->header()
-				->title();
-
-			$p->primary();
-				$this->load('blank');
-
-			$p->secondary();
-				$this->load('index');
+		$this->render([
+			'title' => $this->title = 'ledger',
+			'primary' => 'blank',
+			'secondary' => 'index']);
 
 	}
 
 	function index() {
-		if ( $this->isPost())
-			$this->postHandler();
-
-		else
-			$this->_index();
-
+		$this->isPost() ?
+      $this->postHandler() :
+      $this->_index();
 
 	}
 

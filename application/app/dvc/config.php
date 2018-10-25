@@ -1,5 +1,5 @@
 <?php
-/**
+/*
 	David Bray
 	BrayWorth Pty Ltd
 	e. david@brayworth.com.au
@@ -13,9 +13,13 @@
 NameSpace dvc;
 
 abstract class config extends _config {
-	static $WEBNAME = 'My Accounts';
+
 	static $DB_TYPE = 'sqlite';
 	static $DATE_FORMAT = 'd-M-Y';
+
+	static $PAGE_TEMPLATE = '\page';
+
+	static $WEBNAME = 'My Accounts';
 
 	const use_inline_logon = TRUE;
 

@@ -1,5 +1,5 @@
 <?php
-/**
+/*
 	David Bray
 	BrayWorth Pty Ltd
 	e. david@brayworth.com.au
@@ -99,16 +99,10 @@ class transactions extends Controller {
 
 		//~ }
 
-		$p = new page( $this->title = 'create / edit transaction');
-			$p
-				->header()
-				->title();
-
-			$p->primary();
-				$this->load('edit');
-
-			$p->secondary();
-				$this->load('index');
+		$this->render([
+			'title' => $this->title = 'create / edit transaction',
+			'primary' => 'edit',
+			'secondary' => 'index']);
 
 	}
 
@@ -128,16 +122,11 @@ class transactions extends Controller {
 			]]
 		];
 
-		$p = new page( $this->title = 'pay');
-			$p
-				->header()
-				->title();
+		$this->render([
+			'title' => $this->title = 'pay',
+			'primary' => 'pay',
+			'secondary' => 'index']);
 
-			$p->primary();
-				$this->load('pay');
-
-			$p->secondary();
-				$this->load('index');
 	}
 
 	protected function _index() {
@@ -148,27 +137,17 @@ class transactions extends Controller {
 
 		//~ sys::dump( $this->data);
 
-		$p = new page( $this->title = 'transactions');
-			$p
-				->header()
-				->title();
-
-			$p->primary();
-				//~ sys::dump( $this->data, NULL, FALSE);
-				$this->load('report');
-
-			$p->secondary();
-				$this->load('index');
+		$this->render([
+			'title' => $this->title = 'transactions',
+			'primary' => 'report',
+			'secondary' => 'index']);
 
 	}
 
 	function index() {
-		if ( $this->isPost())
-			$this->postHandler();
-
-		else
-			$this->_index();
-
+		$this->isPost() ?
+      $this->postHandler() :
+      $this->_index();
 
 	}
 

@@ -36,36 +36,30 @@ class settings extends Controller {
 
 	}
 
-	function index() {
-		if ( $this->isPost()) {
-			$this->postHandler();
+	protected function _index() {
+		$dao = new dao\settings;
+		if ( $res = $dao->getAll()) {
+			$this->data = $res->dto();
+
+			//~ sys::dump( $this->data);
+
+			$this->render([
+				'title' => $this->title = 'Settings',
+				'primary' => 'settings',
+				'secondary' => 'main-index']);
 
 		}
 		else {
-			$dao = new dao\settings;
-			if ( $res = $dao->getAll()) {
-				$this->data = $res->dto();
-
-				//~ sys::dump( $this->data);
-
-				$p = new page( $this->title = 'Settings');
-					$p
-						->header()
-						->title();
-
-					$p->primary();
-						$this->load('settings');
-
-					$p->secondary();
-						$this->load('main-index');
-
-			}
-			else {
-				throw new \Exception( 'missing system settings');
-
-			}
+			throw new \Exception( 'missing system settings');
 
 		}
+
+	}
+
+	function index() {
+		$this->isPost() ?
+      $this->postHandler() :
+      $this->_index();
 
 	}
 

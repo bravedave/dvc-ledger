@@ -1,5 +1,5 @@
 <?php
-/**
+/*
 	David Bray
 	BrayWorth Pty Ltd
 	e. david@brayworth.com.au
@@ -13,7 +13,7 @@
 	*/	?>
 <form method="POST" action="<?php url::write( 'transactions') ?>">
 	<input type="hidden" name="glt_type" value="payment" />
-	<table class="table table-striped" id="glt-journal">
+	<table class="table table-striped table-sm" id="glt-journal">
 		<colgroup>
 			<col style="width: 10rem;" />
 			<col style="width: 20rem;" />
@@ -27,7 +27,7 @@
 			<tr>
 				<td>date</td>
 				<td>
-					<input type="text" class="form-control" name="glt_date" value="<?php print $this->data->glt_date ?>" />
+					<input type="date" class="form-control" name="glt_date" value="<?php print $this->data->glt_date ?>" />
 
 				</td>
 				<td colspan="3">&nbsp;</td>
@@ -180,7 +180,6 @@
 
 
 $(document).ready( function() {
-	$('input[name="glt_date"]').calendarHelper();
 	$('input[data-role="save-button"]').prop( 'disabled', true);
 
 	$('a[data-role="add-line"]').each( function( i, el) {

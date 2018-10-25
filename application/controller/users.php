@@ -73,29 +73,22 @@ class users extends Controller {
 
 	}
 
+	protected function _index() {
+		$dao = new dao\users;
+		$this->data = $dao->getAll();
+		//~ sys::dump( $this->data);
+
+		$this->render([
+			'title' => $this->title = 'Users',
+			'primary' => 'report',
+			'secondary' => ['index','main-index']]);
+
+	}
+
 	function index() {
-		if ( $this->isPost()) {
-			$this->postHandler();
-
-		}
-		else {
-			$dao = new dao\users;
-			$this->data = $dao->getAll();
-			//~ sys::dump( $this->data);
-
-			$p = new page( $this->title = 'Users');
-				$p
-					->header()
-					->title();
-
-				$p->primary();
-					$this->load('report');
-
-				$p->secondary();
-					$this->load('index');
-					$this->load('main-index');
-
-		}
+		$this->isPost() ?
+      $this->postHandler() :
+      $this->_index();
 
 	}
 
@@ -120,16 +113,10 @@ class users extends Controller {
 
 		}
 
-		$p = new page( $this->title = 'User');
-			$p
-				->header()
-				->title();
-
-			$p->primary();
-				$this->load('edit');
-
-			$p->secondary();
-				$this->load('index');
+		$this->render([
+			'title' => $this->title = 'User',
+			'primary' => 'edit',
+			'secondary' => 'index']);
 
 	}
 

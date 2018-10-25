@@ -32,10 +32,14 @@ class home extends Controller {
 	}
 
 	protected function authorize() {
-		if ( $this->isPost())
+		if ( $this->isPost()) {
 			$this->_authorize();
-		else
+
+		}
+		else {
 			parent::authorize();
+
+		}
 
 	}
 
@@ -77,100 +81,41 @@ class home extends Controller {
 
 		}
 		else {
-			$p = new page( $this->title = sys::name());
-			$p
-				->header()
-				->title()
-				->primary();
-
-				$this->load( 'readme');
-
-			$p->secondary();
-				$this->load('main-index');
-
+			$this->render([
+				'title' => $this->title = sys::name(),
+				'primary' => 'readme',
+				'secondary' => 'main-index']);
 
 		}
 
 	}
 
 	public function reports() {
-		$p = new page( $this->title = sys::name());
-		$p
-			->header()
-			->title()
-			->primary();
-
-			$this->load( 'reports');
-
-		$p->secondary();
-			$this->load('main-index');
+		$this->render([
+			'title' => $this->title = sys::name(),
+			'primary' => 'reports',
+			'secondary' => 'main-index']);
 
 	}
 
 	public function script() {
-		$debug = FALSE;
-		//~ $debug = TRUE;
-
-		Response::javascript_headers();
-
-		ob_start();
 
 		$jsFilePath = [$this->rootPath, 'app', 'views', 'js', '*.js'];
-		$jsFiles = implode( DIRECTORY_SEPARATOR, $jsFilePath);
-		$gi = new GlobIterator( $jsFiles, FilesystemIterator::KEY_AS_FILENAME);
+		jslib::viewjs([
+			'libName' => 'ledger',
+			'leadKey' => 'primo.js',
+			'jsFiles' => implode( DIRECTORY_SEPARATOR, $jsFilePath),
+			'libFile' => config::tempdir()  . 'ledger.js'
 
-		$_files = [];
-		foreach ($gi as $key => $item) {
-			if ( $key == 'primo.js')
-				array_unshift( $_files, $item->getRealPath());
-			else
-				$_files[] = $item->getRealPath();
-
-		}
-
-		foreach ( $_files as $_) {
-			if ( $debug) \sys::logger( sprintf( ' reading :: %s', $_));
-			include_once $_;
-			print PHP_EOL;
-
-		}
-		$out = ob_get_contents();
-		ob_end_clean();
-
-		if ( $debug || $this->Request->ClientIsLocal()) {
-			if ( $debug) \sys::logger( sprintf( 'home/script ::  not minifying jsCMS :: %s', $this->timer->elapsed()));
-			print $out;
-
-		}
-		else {
-			if ( $debug) \sys::logger( sprintf( 'home/script :: %s', $this->timer->elapsed()));
-
-			$minifier = new MatthiasMullie\Minify\JS;
-			$minifier->add( $out);
-			$minified =  $minifier->minify();
-
-			if ( $debug) \sys::logger( sprintf( 'home/script :: minified :: %s', $this->timer->elapsed()));
-
-			print $minified;
-
-			if ( $debug) \sys::logger( sprintf( 'home/script :: %s', $this->timer->elapsed()));
-
-		}
+		]);
 
 	}
 
 	public function dbinfo() {
-		$p = new page('dbinfo');
-			$p
-			->header()
-			->title()
-			->primary();
-
-			$dbinfo = new dao\dbinfo;
-			$dbinfo->dump();
-
-		$p->secondary();
-			$this->load('main-index');
+		$this->render([
+			'title' => 'dbinfo',
+			'primary' => 'db-info',
+			'secondary' => 'main-index']);
 
 	}
 
