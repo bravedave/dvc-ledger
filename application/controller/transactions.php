@@ -122,6 +122,10 @@ class transactions extends Controller {
 			]]
 		];
 
+		// $this->modal([
+		// 	'title' => $this->title = 'pay',
+		// 	'load' => 'pay']);
+
 		$this->render([
 			'title' => $this->title = 'pay',
 			'primary' => 'pay',
