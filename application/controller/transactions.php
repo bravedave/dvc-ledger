@@ -122,14 +122,22 @@ class transactions extends Controller {
 			]]
 		];
 
-		// $this->modal([
-		// 	'title' => $this->title = 'pay',
-		// 	'load' => 'pay']);
+		$u = true;
+		$u = false;
+		if ( $u) {
+			$this->modal([
+				'title' => $this->title = 'pay',
+				'class' => 'modal-lg',
+				'load' => 'pay']);
 
-		$this->render([
-			'title' => $this->title = 'pay',
-			'primary' => 'pay',
-			'secondary' => 'index']);
+		}
+		else {
+			$this->render([
+				'title' => $this->title = 'pay',
+				'primary' => 'pay',
+				'secondary' => 'index']);
+
+		}
 
 	}
 
