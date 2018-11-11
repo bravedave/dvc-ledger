@@ -8,19 +8,12 @@
 		http://creativecommons.org/licenses/by/4.0/
 
 	*/ ?>
-<table class="table table-striped table-sm">
-	<colgroup>
-		<col />
-		<col style="width: 10em;" />
-		<col style="width: 10em;" />
-
-	</colgroup>
-
+<table class="table table-sm">
 	<thead>
 		<tr>
 			<td>description</td>
-			<td>open</td>
-			<td class="text-center">current</td>
+			<td style="width: 10em;" class="text-right">open</td>
+			<td style="width: 10em;" class="text-right">current</td>
 		</tr>
 
 	</thead>

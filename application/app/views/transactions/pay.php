@@ -11,241 +11,340 @@
 		Payment Form
 
 	*/	?>
-<form method="POST" action="<?php url::write( 'transactions') ?>">
-	<input type="hidden" name="glt_type" value="payment" />
-	<table class="table table-striped table-sm" id="glt-journal">
-		<colgroup>
-			<col style="width: 10rem;" />
-			<col style="width: 20rem;" />
-			<col />
-			<col style="width: 10rem;" />
-			<col style="width: 10rem;" />
+<div class="container">
+	<form id="<?php print $uidFrm = uniqid() ?>">
+		<input type="hidden" name="glt_type" value="payment" />
 
-		</colgroup>
+		<div class="row form-group">
+			<label class="col-2 col-form-label" for="<?php print $uidDate = uniqid() ?>">
+				date
 
-		<thead>
-			<tr>
-				<td>date</td>
-				<td>
-					<input type="date" class="form-control" name="glt_date" value="<?php print $this->data->glt_date ?>" />
+			</label>
 
-				</td>
-				<td colspan="3">&nbsp;</td>
+			<div class="col col-md-6">
+				<input type="date" class="form-control" name="glt_date"
+					id="<?php print $uidDate ?>"
+					value="<?php print $this->data->glt_date ?>" />
 
-			</tr>
+			</div>
 
-			<tr>
-				<td>refer</td>
-				<td>
-					<input type="text" class="form-control" name="glt_refer" value="<?php print $this->data->glt_refer ?>" />
+		</div>
 
-				</td>
-				<td colspan="3">&nbsp;</td>
+		<div class="row form-group">
+			<label class="col-2 col-form-label" for="<?php print $uidRefer = uniqid() ?>">
+				refer
 
-			</tr>
+			</label>
 
-			<tr>
-				<td>source</td>
-				<td>
-					<input type="text" class="form-control" name="h_glt_code" id="h_glt_code" value="<?php print $this->data->glt_code ?>" />
+			<div class="col col-md-6">
+				<input type="text" class="form-control" name="glt_refer"
+					id="<?php print $uidRefer ?>" value="<?php print $this->data->glt_refer ?>" />
 
-				</td>
-				<td colspan="3">&nbsp;</td>
+			</div>
 
-			</tr>
+		</div>
 
-			<tr>
-				<td>value</td>
-				<td>
-					<input type="text" class="form-control" name="h_glt_value" value="<?php print $this->data->glt_value ?>" />
+		<div class="row form-group">
+			<label class="col-2 col-form-label" for="h_glt_code">
+				source
 
-				</td>
-				<td class="text-right">gst</td>
-				<td>
-					<input type="text" class="form-control" name="h_glt_gst" value="<?php print $this->data->glt_gst ?>" />
+			</label>
 
-				</td>
-				<td>&nbsp;</td>
+			<div class="col col-md-6">
+				<input type="text" class="form-control" name="h_glt_code" id="h_glt_code"
+					value="<?php print $this->data->glt_code ?>" />
 
-			</tr>
+			</div>
 
-			<tr>
-				<td>payee</td>
-				<td colspan="4">
-					<input type="text" class="form-control" name="h_glt_comment" value="<?php print $this->data->glt_comment ?>" />
+		</div>
 
-				</td>
+		<div class="row form-group">
+			<label class="col-2 col-form-label" for="<?php print $uidGltValue = uniqid() ?>">
+				value
 
-			</tr>
+			</label>
 
-			<tr>
-				<td>code</td>
-				<td colspan="2">description</td>
-				<td>value</td>
-				<td>gst</td>
+			<div class="col">
+				<input type="text" class="form-control" name="h_glt_value" id="<?php print $uidGltValue ?>" value="<?php print $this->data->glt_value ?>" />
 
-			</tr>
+			</div>
 
-		</thead>
+			<div class="col-4 pl-0">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<div class="input-group-text">$</div>
 
-		<tbody>
+					</div>
+
+					<input type="text" class="form-control" name="h_glt_gst" id="<?php print $uidGstValue = uniqid() ?>" value="<?php print $this->data->glt_gst ?>" />
+
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="row form-group">
+			<label class="col-2 col-form-label" for="h_glt_comment">
+				payee
+
+			</label>
+
+			<div class="col">
+				<input type="text" class="form-control" name="h_glt_comment" id="h_glt_comment" value="<?php print $this->data->glt_comment ?>" />
+
+			</div>
+
+		</div>
+
+		<div class="row">
+			<div class="col" id="<?php print $uidJournal = uniqid() ?>">
+				<div class="row">
+					<div class="col-5 col-lg-2">code</div>
+					<div class="col-7 col-lg-5">description</div>
+					<div class="d-none d-lg-block col-lg-3">value</div>
+					<div class="d-none d-lg-block col-lg-2">gst</div>
+
+				</div>
+
 <?php	foreach ( $this->data->lines as $l) {
-			print '<tr>';
-			printf( '<td><input type="text" class="form-control" name="glt_code[]" value="%s" /></td>', $l->glt_code);
-			printf( '<td colspan="2"><input type="text" class="form-control" name="glt_comment[]" value="%s" /></td>', $l->glt_comment);
-			printf( '<td><input type="text" class="form-control text-right" name="glt_value[]" value="%s" /></td>', $l->glt_value);
-			printf( '<td><input type="text" class="form-control text-right" name="glt_gst[]" value="%s" /></td>', $l->glt_gst);
-			print '</tr>';
+			print '<div class="row form-group" line>';
+			printf( '<div class="col-5 col-lg-2"><input type="text" class="form-control" name="glt_code[]" value="%s" /></div>', $l->glt_code);
+			printf( '<div class="col-7 col-lg-5"><input type="text" class="form-control" name="glt_comment[]" value="%s" /></div>', $l->glt_comment);
+			printf( '<div class="col-7 col-lg-3">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<div class="input-group-text">$</div>
+					</div>
+					<input type="text" class="form-control text-right" name="glt_value[]" value="%s" />
+				</div>
+
+			</div>', $l->glt_value);
+
+			printf( '<div class="col-5 col-lg-2 pl-lg-0">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<div class="input-group-text">$</div>
+					</div>
+					<input type="text" class="form-control text-right" name="glt_gst[]" value="%s" />
+				</div>
+
+			</div>', $l->glt_gst);
+
+			print '</div>';
 		}	?>
 
-		</tbody>
+			</div>
 
-		<tfoot>
-			<tr>
-				<td><a href="#" data-role="add-line">[add line]</a></td>
-				<td class="text-right" colspan="2">GST</td>
-				<td class="text-right" data-role="gst">&nbsp;</td>
-				<td>&nbsp;</td>
+		</div>
 
-			</tr>
+		<div class="row">
+			<div class="col-lg-5">
+				<div class="row">
+					<div class="col"><input class="btn btn-light" id="<?php print $uidBtnSave = uniqid() ?>" type="submit" name="action" value="save transaction" /></div>
+					<div class="col"><a class="btn btn-light" href="#" id="<?php print $uidBtnAddLine = uniqid() ?>" data-role="add-line">add line <i class="fa fa-fw fa-plus"></i></a></div>
 
-			<tr>
-				<td class="text-right"><input class="btn btn-default" data-role="save-button" type="submit" name="action" value="save transaction" /></td>
-				<td class="text-right" colspan="2">un allocated</td>
-				<td class="text-right" data-role="total">&nbsp;</td>
-				<td>&nbsp;</td>
+				</div>
 
-			</tr>
+			</div>
 
-		</tfoot>
+			<div class="col-3 col-lg-2 pt-lg-0 pt-2">un allocated</div>
+			<div class="col-5 col-lg-3 pt-lg-0 pt-2">
+				<div class="input-group input-group-sm">
+					<div class="input-group-prepend">
+						<div class="input-group-text">
+							value
 
-	</table>
+						</div>
 
-</form>
+					</div>
+
+					<input type="text" class="form-control text-right" readonly id="<?php print $uidTotDisplay = uniqid() ?>" />
+
+				</div>
+
+			</div>
+
+			<div class="col-4 col-lg-2 pt-lg-0 pt-2 pl-lg-0">
+				<div class="input-group input-group-sm">
+					<div class="input-group-prepend">
+						<div class="input-group-text">
+							gst
+
+						</div>
+
+					</div>
+
+					<input type="text" class="form-control text-right" readonly id="<?php print $uidGstDisplay = uniqid() ?>" />
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</form>
+
+</div>
+
 <script>
-	function totLines() {
-		var tot = 0
-		var gst = 0
-		var gltValue = $('thead input[name="h_glt_value"]');
-		var v = Number( gltValue.val());
-		if ( isNaN( v))
-			v = 0;
-		tot += v;
-		gltValue.val( v.formatCurrency());
-
-		var gstValue = $('thead input[name="h_glt_gst"]');
-		var g = Number( gstValue.val());
-		if ( isNaN( g))
-			g = 0;
-		gstValue.val( g.formatCurrency());
-
-		//~ return ( tot);
-
-		var lines = $('#glt-journal tbody tr');
-		if ( lines.length > 0) {
-			lines.each( function( i, el) {
-				var gltValue = $('input[name="glt_value[]"]', el);
-				var v = Number( gltValue.val());
-				if ( isNaN(v))
-					v = 0;
-				gltValue.val( v.formatCurrency());
-				tot -= v;
-
-				var gstValue = $('input[name="glt_gst[]"]', el);
-				var g = Number( gstValue.val());
-				if ( isNaN(v))
-					g = 0;
-				gstValue.val( g.formatCurrency());
-				gst -= g;
-				tot -= g;
-
-				// console.log( v, g);
-
-			});
-
-			// console.log( 'v, g');
-			$('input[data-role="save-button"]').prop( 'disabled', tot != 0);
-
-		}
-		else {
-			$('input[data-role="save-button"]').prop( 'disabled', true);
-
-		}
-		$('#glt-journal tfoot td[data-role="gst"]').html( (-gst).formatCurrency());
-		$('#glt-journal tfoot td[data-role="total"]').html( (-tot).formatCurrency());
-		return ( tot);
-
-	}
-
-
-
 $(document).ready( function() {
-	$('input[data-role="save-button"]').prop( 'disabled', true);
-
-	$('a[data-role="add-line"]').each( function( i, el) {
-		var _el = $(el);
-		_el
-		.on( 'click', function( e) {
-			var value = $('<input type="text" class="form-control text-right" name="glt_value[]" value="" />');
-			var comment = $('<input type="text" class="form-control" name="glt_comment[]" value="" />');
-			var code = $('<input type="text" class="form-control" name="glt_code[]" value="" />');
-
-			var r = $('<tr />');
-			$('<td />').append( code).appendTo( r);
-			$('<td colspan="2" />').append( comment).appendTo( r);
-			$('<td />').append( value).appendTo( r);
-
-			r.appendTo('#glt-journal tbody');
-
-			value.on('change', totLines);
-
-			code.autocomplete({
-				autoFocus : true,
-				source: function( request, response ) {
-					$.ajax({
-						url : _brayworth_.urlwrite( 'search/ledger'),
-						data : { term: request.term },
-
-					})
-					.done( response);
-
-				},
-				minLength: 2,
-				select: function(event, ui) {
-					var o = ui.item;
-					//~ comment.val( o.label);
-					value.focus()
-
-				}
-
-			})
-
-		})
-
-		$('#h_glt_code').autocomplete({
+	let codeFill = function( code) {
+		code.autofill({
 			autoFocus : true,
 			source: function( request, response ) {
 				$.ajax({
-					url : _brayworth_.urlwrite( 'search/ledger'),
+					url : _brayworth_.url( 'search/ledger'),
 					data : { term: request.term },
 
 				})
 				.done( response);
 
-			},
-			minLength: 2,
-			select: function(event, ui) {
-				var o = ui.item;
-				//~ comment.val( o.label);
-				value.focus()
-
 			}
 
-		})
+		});
+
+	}
+
+	let totLines = function() {
+		let gltValue = $('#<?php print $uidGltValue ?>');
+		let v = Number( gltValue.val());
+		if ( isNaN( v)) v = 0;
+
+		let tot = v;
+
+		gltValue.val( v.formatCurrency());
+		//~ console.log( 'journal value', v);
+
+		let gstValue = $('#<?php print $uidGstValue ?>');
+		let g = Number( gstValue.val());
+		if ( isNaN( g)) g = 0;
+
+		let gst = g;
+
+		gstValue.val( g.formatCurrency());
+
+		//~ console.log( 'journal values', v, g);
+			//~ return ( tot);
+
+		let lines = $('#<?php print $uidJournal ?> [line]');
+		if ( lines.length > 0) {
+			lines.each( function( i, el) {
+				let gltValue = $('input[name="glt_value[]"]', el);
+				let v = Number( gltValue.val());
+				if ( isNaN(v)) v = 0;
+
+				gltValue.val( v.formatCurrency());
+				tot -= v;
+				//~ console.log( 'line value', v);
+
+				let gstValue = $('input[name="glt_gst[]"]', el);
+				let g = Number( gstValue.val());
+				if ( isNaN(g)) g = 0;
+
+				gstValue.val( g.formatCurrency());
+
+				tot -= g;
+				gst -= g;
+
+				//~ console.log( 'line value', v, g);
+
+			});
+
+			// console.log( 'v, g');
+			$('#<?php print $uidBtnSave ?>').prop( 'disabled', tot != 0);
+
+		}
+		else {
+			$('#<?php print $uidBtnSave ?>').prop( 'disabled', true);
+
+		}
+
+		$('#<?php print $uidGstDisplay ?>').val( (-gst).formatCurrency());
+		$('#<?php print $uidTotDisplay ?>').val( (-tot).formatCurrency());
+
+		return ( tot);
+
+	}
+
+	$('#<?php print $uidFrm ?>').on('submit', function() {
+		return ( false);
+
+	});
+
+	$('#<?php print $uidBtnSave ?>').on( 'click', function( e) {
+		e.stopPropagation(); e.preventDefault();
+
+		let frm = $('#<?php print $uidFrm ?>');
+		let data = frm.serializeFormJSON();
+		data.action = 'save transaction';
+		data.format = 'json';
+
+		_brayworth_.post({
+			url : _brayworth_.url('transactions'),
+			data : data
+
+		}).then( function( d) {
+			_brayworth_.growl( d);
+			frm.closest('.modal').modal('hide');
+
+		});
 
 	});
 
 	totLines();	// disable submit button
+
+	$('#<?php print $uidBtnAddLine ?>').on( 'click', function( e) {
+		e.stopPropagation(); e.preventDefault();
+		console.log( 'add line');
+
+		let code = $('<input type="text" class="form-control" name="glt_code[]" />');
+		let comment = $('<input type="text" class="form-control" name="glt_comment[]" />');
+		let value = $('<input type="text" class="form-control text-right" name="glt_value[]" />');
+		let gst = $('<input type="text" class="form-control text-right" name="glt_gst[]" />');
+		value.on('change', totLines);
+		gst.on('change', totLines);
+
+		let row = $('<div class="row form-group" line />').appendTo( $('#<?php print $uidJournal ?>'));
+		$('<div class="col-5 col-lg-2" />').append( code).appendTo( row);
+		$('<div class="col-7 col-lg-5" />').append( comment).appendTo( row);
+
+		(function() {
+			let col = $('<div class="col-7 col-lg-3" />').appendTo( row);
+			let ig = $('<div class="input-group" />').append( value).appendTo( col);
+
+			ig.prepend( '<div class="input-group-prepend"><div class="input-group-text">$</div></div>');
+
+		})();
+
+		(function() {
+			let col = $('<div class="col-5 col-lg-2 pl-lg-0" />').appendTo( row);
+			let ig = $('<div class="input-group" />').append( gst).appendTo( col);
+
+			ig.prepend( '<div class="input-group-prepend"><div class="input-group-text">$</div></div>');
+
+		})();
+
+		codeFill( code);
+
+	});
+
+	(function() {
+		codeFill( $('#h_glt_code'));
+
+		let lines = $('#<?php print $uidJournal ?> [line]');
+		if ( lines.length > 0) {
+			lines.each( function( i, el) {
+				codeFill( $('input[name="glt_code[]"]', el));
+				$('input[name="glt_value[]"]', el).on('change', totLines);
+				$('input[name="glt_gst[]"]', el).on('change', totLines);
+
+			});
+
+		}
+
+	})();
 
 });
 </script>

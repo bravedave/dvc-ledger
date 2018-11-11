@@ -29,9 +29,9 @@ class transactions extends Controller {
 			$dao = new dao\transactions;
 			if ( 'payment' === $a['glt_type']) {
 				$a['glt_code'] = $this->getPost('h_glt_code');
-		    $a['glt_value'] = (float)$this->getPost('h_glt_value') * -1;
-		    // $a['glt_gst'] = $this->getPost('h_glt_gst');
-		    $a['glt_comment'] = $this->getPost('h_glt_comment');
+				$a['glt_value'] = (float)$this->getPost('h_glt_value') * -1;
+				// $a['glt_gst'] = $this->getPost('h_glt_gst');
+				$a['glt_comment'] = $this->getPost('h_glt_comment');
 				$dao->Insert( $a);
 
 				// sys::dump( $_POST);
@@ -62,7 +62,11 @@ class transactions extends Controller {
 			}
 
 			//~ sys::dump( $jnl);
-			Response::redirect( 'transactions', 'posted transaction');
+			if ( $format == 'json')
+				\Json::ack( $action);
+
+			else
+				Response::redirect( 'transactions', 'posted transaction');
 
 
 		}
@@ -123,7 +127,7 @@ class transactions extends Controller {
 		];
 
 		$u = true;
-		$u = false;
+		// $u = false;
 		if ( $u) {
 			$this->modal([
 				'title' => $this->title = 'pay',
