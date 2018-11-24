@@ -15,7 +15,7 @@ NameSpace dvc;
 abstract class config extends _config {
 
 	static $DB_TYPE = 'sqlite';
-	static $DATE_FORMAT = 'd-M-Y';
+	static $DATE_FORMAT = 'd-M-y';
 
 	static $PAGE_TEMPLATE = '\page';
 

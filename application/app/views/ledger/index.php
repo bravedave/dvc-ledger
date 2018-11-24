@@ -13,22 +13,22 @@
 
 <ul class="list-unstyled">
 	<li>
-		<a href="#" id="<?php url::write( 'ledger/trial') ?>">trial balance</a>
+		<a href="<?php url::write( 'ledger/trial') ?>">trial balance</a>
 
 	</li>
 
 	<li>
-		<a href="#" id="<?php url::write( 'ledger/balanceSheet') ?>">balance sheet</a>
+		<a href="<?php url::write( 'ledger/balanceSheet') ?>">balance sheet</a>
 
 	</li>
 
 	<li>
-		<a href="#" id="<?php url::write( 'ledger/trading') ?>">trading report</a>
+		<a href="<?php url::write( 'ledger/trading') ?>">trading report</a>
 
 	</li>
 
 	<li>
-		<a href="#" id="<?php url::write( '') ?>"></a>
+		<a href="<?php url::write( '') ?>"></a>
 
 	</li>
 

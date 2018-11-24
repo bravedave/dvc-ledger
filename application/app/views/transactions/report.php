@@ -8,7 +8,7 @@
 		http://creativecommons.org/licenses/by/4.0/
 
 	*/	?>
-<table class="table table-striped table-sm">
+<table class="table table-sm">
 	<colgroup>
 		<col style="width: 5em" />
 		<col style="width: 7em" />
@@ -58,10 +58,10 @@
 			?>
 		<tr>
 			<td><?php print $dto->glt_code	?></td>
-			<td><?php print date( \config::$DATE_FORMAT, strtotime( $dto->glt_date))	?></td>
+			<td><?php print strings::asShortDate( $dto->glt_date)	?></td>
 			<td><?php print $dto->glt_comment	?></td>
-			<td class="text-right"><?php print ( (float)$dto->glt_value > 0 ? number_format( -(float)$dto->glt_value, 2) : '&nbsp;' ) ?></td>
-			<td class="text-right"><?php print ( (float)$dto->glt_value < 0 ? number_format( (float)$dto->glt_value, 2) : '&nbsp;' ) ?></td>
+			<td class="text-right"><?php print ( (float)$dto->glt_value > 0 ? number_format( (float)$dto->glt_value, 2) : '&nbsp;' ) ?></td>
+			<td class="text-right"><?php print ( (float)$dto->glt_value < 0 ? number_format( -(float)$dto->glt_value, 2) : '&nbsp;' ) ?></td>
 			<td class="text-right"><?php print ( (float)$dto->glt_gst > 0 ? number_format( (float)$dto->glt_gst, 2) : '&nbsp;' ) ?></td>
 			<td class="text-right"><?php print ( (float)$dto->glt_gst < 0 ? number_format( -(float)$dto->glt_gst, 2) : '&nbsp;' ) ?></td>
 
