@@ -1,6 +1,6 @@
 {
-	"name": "bravedave/dvc-auth",
-	"description": "DVC-AUTH - PSR-4 Data-View-Controller with Authentication",
+	"name": "bravedave/dvc-legdger",
+	"description": "DVC-LEDGER - a simple ledger built using the DVC-Auth template",
 	"version": "0.0.1",
 	"minimum-stability": "dev",
 	"prefer-stable": true,

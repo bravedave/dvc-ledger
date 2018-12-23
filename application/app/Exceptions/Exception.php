@@ -9,10 +9,10 @@
 
 	*/
 
-NameSpace Exceptions;
+namespace Exceptions;
 
 class Exception extends \dvc\Exception {
-	protected $_ledger = FALSE;
+	protected $_ledger = false;
 
 	public function __construct($message = null, $code = 0, Exception $previous = null) {
 

@@ -47,9 +47,9 @@ class home extends Controller {
 		$action = $this->getPost( 'action');
 		if ( $action == '-system-logon-') {
 			/**
-			 * it might not be firstRun and it might not be lockdown
-			 * but if a page requiring authentication it will request
-			 * it through the home page, so process it ..*/
+			* it might not be firstRun and it might not be lockdown
+			* but if a page requiring authentication it will request
+			* it through the home page, so process it ..*/
 			$this->_authorize();
 			return;
 
@@ -60,10 +60,14 @@ class home extends Controller {
 	function __construct( $rootPath) {
 		$this->firstRun = sys::firstRun();
 
-		if ( $this->firstRun)
-			$this->RequireValidation = FALSE;
-		else
+		if ( $this->firstRun) {
+			$this->RequireValidation = false;
+
+		}
+		else {
 			$this->RequireValidation = \sys::lockdown();
+
+		}
 
 		page::$addScripts = ( !$this->RequireValidation || $this->authorised);
 
@@ -84,22 +88,15 @@ class home extends Controller {
 			$this->render([
 				'title' => $this->title = sys::name(),
 				'primary' => 'readme',
-				'secondary' => 'main-index']);
+				'secondary' => 'main-index'
+
+			]);
 
 		}
 
 	}
 
-	public function reports() {
-		$this->render([
-			'title' => $this->title = sys::name(),
-			'primary' => 'reports',
-			'secondary' => 'main-index']);
-
-	}
-
 	public function script() {
-
 		$jsFilePath = [$this->rootPath, 'app', 'views', 'js', '*.js'];
 		jslib::viewjs([
 			'libName' => 'ledger',
@@ -115,7 +112,9 @@ class home extends Controller {
 		$this->render([
 			'title' => 'dbinfo',
 			'primary' => 'db-info',
-			'secondary' => 'main-index']);
+			'secondary' => 'main-index'
+
+		]);
 
 	}
 

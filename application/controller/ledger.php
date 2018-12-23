@@ -60,7 +60,7 @@ class ledger extends Controller {
 
 	function edit( $id = 0) {
 		$this->data = (object)[
-			'dto' => FALSE
+			'dto' => false
 		];
 
 		if ( $id = (int)$id) {
@@ -72,7 +72,9 @@ class ledger extends Controller {
 		$this->render([
 			'title' => $this->title = 'create / edit account',
 			'primary' => 'edit',
-			'secondary' => 'index']);
+			'secondary' => 'index'
+
+		]);
 
 	}
 
@@ -131,7 +133,9 @@ class ledger extends Controller {
 		$this->render([
 			'title' => $this->title = 'ledger',
 			'primary' => 'blank',
-			'secondary' => 'index']);
+			'secondary' => 'index'
+
+		]);
 
 	}
 

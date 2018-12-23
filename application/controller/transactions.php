@@ -100,30 +100,31 @@ class transactions extends Controller {
 		$this->data = (object)[
 			'glt_date' => date( 'Y-m-d'),
 			'glt_refer' => '',
-			'lines' => [(object)[
-				'glt_code' => 'bank',
-				'glt_comment' => 'Bunnings Hardware',
-				'glt_value' => -110,
-				'glt_gst' => 0
-			],
-			(object)[
-				'glt_code' => 'expenses',
-				'glt_comment' => 'Hammer & Chisel',
-				'glt_value' => 100,
-				'glt_gst' => 10
-			]]
+			'lines' => []
+
 		];
+		// (object)[
+		// 	'glt_code' => 'bank',
+		// 	'glt_comment' => 'Bunnings Hardware',
+		// 	'glt_value' => -110,
+		// 	'glt_gst' => 0
+		//
+		// ],
+		// (object)[
+		// 	'glt_code' => 'expenses',
+		// 	'glt_comment' => 'Hammer & Chisel',
+		// 	'glt_value' => 100,
+		// 	'glt_gst' => 10
+		//
+		// ]
 
-		//~ if ( $id = (int)$id) {
-			//~ $dao = new dao\ledger;
-			//~ $this->data->dto = $dao->getByID( $id);
-
-		//~ }
 
 		$this->render([
 			'title' => $this->title = 'create / edit transaction',
 			'primary' => 'edit',
-			'secondary' => 'index']);
+			'secondary' => 'index'
+
+		]);
 
 	}
 
@@ -142,7 +143,9 @@ class transactions extends Controller {
 		$this->render([
 			'title' => $this->title = sprintf( 'gst : %s - %s', strings::asLocalDate( $start),  strings::asLocalDate( $end)),
 			'primary' => ['start-end', 'report-gst'],
-			'secondary' => 'index']);
+			'secondary' => 'index'
+
+		]);
 
 	}
 
@@ -151,33 +154,28 @@ class transactions extends Controller {
 			'glt_date' => date( 'Y-m-d'),
 			'glt_code' => 'bank',
 			'glt_refer' => '',
-			'glt_value' => 110,
-			'glt_gst' => 10,
-			'glt_comment' => 'Bunnings Hardware',
-			'lines' => [(object)[
-				'glt_code' => 'expenses',
-				'glt_comment' => 'Hammer & Chisel',
-				'glt_value' => 100,
-				'glt_gst' => 10
-			]]
+			'glt_value' => 0,
+			'glt_gst' => 0,
+			'glt_comment' => '',
+			'lines' => [
+				(object)[
+					'glt_code' => 'expenses',
+					'glt_comment' => '',
+					'glt_value' => 0,
+					'glt_gst' => 0
+
+				]
+
+			]
+
 		];
 
-		$u = true;
-		// $u = false;
-		if ( $u) {
-			$this->modal([
-				'title' => $this->title = 'pay',
-				'class' => 'modal-lg',
-				'load' => 'pay']);
+		$this->render([
+			'title' => $this->title = 'pay',
+			'primary' => 'pay',
+			'secondary' => 'index'
 
-		}
-		else {
-			$this->render([
-				'title' => $this->title = 'pay',
-				'primary' => 'pay',
-				'secondary' => 'index']);
-
-		}
+		]);
 
 	}
 
@@ -186,41 +184,27 @@ class transactions extends Controller {
 			'glt_date' => date( 'Y-m-d'),
 			'glt_code' => 'bank',
 			'glt_refer' => '',
-			'glt_value' => 220,
-			'glt_gst' => 20,
-			'glt_comment' => 'Nice Lawn Mow',
+			'glt_value' => 0,
+			'glt_gst' => 0,
+			'glt_comment' => '',
 			'lines' => [
 				(object)[
 					'glt_code' => 'sales',
-					'glt_comment' => 'Trim Edges',
-					'glt_value' => 60,
-					'glt_gst' => 6
-				],
-				(object)[
-					'glt_code' => 'sales',
-					'glt_comment' => 'Cut Grass',
-					'glt_value' => 140,
-					'glt_gst' => 14
+					'glt_comment' => '',
+					'glt_value' => 0,
+					'glt_gst' => 0
 				]
+
 			]
+
 		];
 
-		$u = true;
-		// $u = false;
-		if ( $u) {
-			$this->modal([
-				'title' => $this->title = 'receipt',
-				'class' => 'modal-lg',
-				'load' => 'receipt']);
+		$this->render([
+			'title' => $this->title = 'receipt',
+			'primary' => 'receipt',
+			'secondary' => 'index'
 
-		}
-		else {
-			$this->render([
-				'title' => $this->title = 'receipt',
-				'primary' => 'receipt',
-				'secondary' => 'index']);
-
-		}
+		]);
 
 	}
 
@@ -239,7 +223,9 @@ class transactions extends Controller {
 		$this->render([
 			'title' => $this->title = sprintf( 'transactions : %s - %s', strings::asLocalDate( $start),  strings::asLocalDate( $end)),
 			'primary' => ['start-end', 'report'],
-			'secondary' => 'index']);
+			'secondary' => 'index'
+
+		]);
 
 	}
 

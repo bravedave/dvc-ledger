@@ -20,7 +20,9 @@ class users extends Controller {
 			$a = [
 				'updated' => db::dbTimeStamp(),
 				'name' => $this->getPost('name'),
-				'email' => $this->getPost('email')];
+				'email' => $this->getPost('email')
+
+			];
 
 			if ( $pass = $this->getPost('pass')) {
 				$a['pass'] = password_hash( $pass, PASSWORD_DEFAULT);
@@ -51,7 +53,6 @@ class users extends Controller {
 
 		}
 		elseif ( $action == 'delete') {
-
 			if ( $id = (int)$this->getPost('id')) {
 				$dao = new dao\users;
 				$dao->delete( $id);
@@ -81,14 +82,15 @@ class users extends Controller {
 		$this->render([
 			'title' => $this->title = 'Users',
 			'primary' => 'report',
-			'secondary' => ['index','main-index']]);
+			'secondary' => ['index','main-index']
+		]);
 
 	}
 
 	function index() {
 		$this->isPost() ?
-      $this->postHandler() :
-      $this->_index();
+			$this->postHandler() :
+			$this->_index();
 
 	}
 
@@ -98,7 +100,10 @@ class users extends Controller {
 				'id' => 0,
 				'username' => '',
 				'name' => '',
-				'email' => '']];
+				'email' => ''
+			]
+
+		];
 
 		if ( $id) {
 			$dao = new dao\users;
@@ -116,7 +121,9 @@ class users extends Controller {
 		$this->render([
 			'title' => $this->title = 'User',
 			'primary' => 'edit',
-			'secondary' => 'index']);
+			'secondary' => 'index'
+
+		]);
 
 	}
 

@@ -17,100 +17,101 @@
 
 	];
 
-	if ( $this->data->dto)
+	if ( $this->data->dto) {
 		$dto = $this->data->dto;
+
+	}
 	?>
-<form class="form" method="post" action="<?php url::write('ledger') ?>">
-	<input type="hidden" name="id" value="<?php print $dto->id ?>" />
+	<form class="form" method="post" action="<?php url::write('ledger') ?>">
+		<input type="hidden" name="id" value="<?= $dto->id ?>" />
 
-	<div class="row">
-		<div class="col-3">code</div>
+		<div class="row">
+			<div class="col-3">code</div>
 
-		<div class="col-9">
-			<input type="text" class="form-control" name="gl_code" value="<?php print $dto->gl_code ?>" <?php if ( $dto->id > 0) print 'disabled'; ?>/>
+			<div class="col-9">
+				<input type="text" class="form-control" name="gl_code" value="<?= $dto->gl_code ?>"
+				<?php if ( $dto->id > 0) print 'disabled'; ?> />
 
-		</div>
-
-	</div>
-
-	<div class="row pt-4">
-		<div class="col-3">description</div>
-		<div class="col-9">
-			<input type="text" class="form-control" name="gl_description" value="<?php print $dto->gl_description ?>" />
+			</div>
 
 		</div>
 
-	</div>
+		<div class="row pt-4">
+			<div class="col-3">description</div>
+			<div class="col-9">
+				<input type="text" class="form-control" name="gl_description" value="<?= $dto->gl_description ?>" />
 
-	<div class="row pt-4">
-		<div class="offset-3 col-9">
-			<label>
-				<input type="checkbox" class="form-control-checkbox" name="gl_trading" <?php if ( $dto->gl_trading) print 'checked' ?> value="1" />
-				trading account
-
-			</label>
+			</div>
 
 		</div>
 
-	</div>
+		<div class="row pt-4">
+			<div class="offset-3 col-9">
+				<label>
+					<input type="checkbox" class="form-control-checkbox" name="gl_trading" <?php if ( $dto->gl_trading) print 'checked' ?> value="1" />
+					trading account
 
-	<div class="row pt-4">
-		<div class="col-3">account type</div>
-		<div class="col-9">
-			<select class="form-control" name="gl_type" data-value="<?php print $dto->gl_type ?>"></select>
+				</label>
 
-		</div>
-
-	</div>
-
-	<div class="row pt-4">
-		<div class="offset-3 col-9">
-			<input type="submit" class="btn btn-primary" name="action" value="add/update" />
+			</div>
 
 		</div>
 
-	</div>
+		<div class="row pt-4">
+			<div class="col-3">account type</div>
+			<div class="col-9">
+				<select class="form-control" name="gl_type" data-value="<?= $dto->gl_type ?>"></select>
 
-</form>
-<script>
-function setupTrading() {
-	var sel = $('select[name="gl_type"]')
-	sel.html('');
-	$('<option value="">type</option>').appendTo( sel);
-	$.each( ledger.sections.trading, function( i, el) {
-		$('<option />').attr('value', i).html( el).appendTo( sel);
+			</div>
 
-	})
+		</div>
 
-	sel.val( sel.data('value'));
+		<div class="row pt-4">
+			<div class="offset-3 col-9">
+				<input type="submit" class="btn btn-primary" name="action" value="add/update" />
 
-}
+			</div>
 
-function setupBalsheet() {
-	var sel = $('select[name="gl_type"]')
-	sel.html('');
-	$('<option value="">type</option>').appendTo( sel);
-	$.each( ledger.sections.balsheet, function( i, el) {
-		$('<option></option>').attr('value', i).html( el).appendTo( sel);
+		</div>
 
-	})
+	</form>
+	<script>
 
-	sel.val( sel.data('value'));
+		$(document).ready( function() {
+			function setupTrading() {
+				let sel = $('select[name="gl_type"]')
+				sel.html('');
+				$('<option value="">type</option>').appendTo( sel);
+				$.each( ledger.sections.trading, function( i, el) {
+					$('<option />').attr('value', i).html( el).appendTo( sel);
 
-}
+				})
 
-function checkSelState() {
-	if ( $(this).prop( 'checked'))
-		setupTrading();
-	else
-		setupBalsheet();
+				sel.val( sel.data('value'));
 
-}
+			}
 
-$(document).ready( function() {
-	var t = $('input[name="gl_trading"]')
-	t.on( 'change', checkSelState);
-	checkSelState.call( t);
+			function setupBalsheet() {
+				let sel = $('select[name="gl_type"]');
+				sel.html('');
+				$('<option value="">type</option>').appendTo( sel);
+				$.each( ledger.sections.balsheet, function( i, el) {
+					$('<option />').attr('value', i).html( el).appendTo( sel);
 
-})
-</script>
+				})
+
+				sel.val( sel.data('value'));
+
+			}
+
+			function checkSelState() {
+				$(this).prop( 'checked') ? setupTrading() : setupBalsheet();
+
+			}
+
+			var t = $('input[name="gl_trading"]')
+			t.on( 'change', checkSelState);
+			checkSelState.call( t);
+
+		})
+	</script>

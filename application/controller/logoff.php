@@ -9,8 +9,8 @@
 
 	*/
 class logoff extends Controller {
-	public $RequireValidation = FALSE;
-	public $CheckOffline = FALSE;
+	public $RequireValidation = false;
+	public $CheckOffline = false;
 
 	function index() {
 		\session::destroy();

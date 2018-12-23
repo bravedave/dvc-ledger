@@ -20,7 +20,7 @@ abstract class trading {
 		if ( array_key_exists( $c, self::$_types))
 			return ( self::$_types[ $c]);
 
-		return ( FALSE);
+		return ( false);
 
 	}
 

@@ -46,7 +46,9 @@ class settings extends Controller {
 			$this->render([
 				'title' => $this->title = 'Settings',
 				'primary' => 'settings',
-				'secondary' => 'main-index']);
+				'secondary' => 'main-index'
+
+			]);
 
 		}
 		else {

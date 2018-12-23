@@ -10,9 +10,9 @@
 	*/
 
 class application extends dvc\application {
-	private $_settings = FALSE;
+	private $_settings = false;
 
-	const use_full_url = FALSE;
+	const use_full_url = false;
 
 	static function run() {
 		$app = new application( dirname( __FILE__ ) . '/../' );

@@ -7,11 +7,11 @@
 	This work is licensed under a Creative Commons Attribution 4.0 International Public License.
 		http://creativecommons.org/licenses/by/4.0/
 	*/
-NameSpace dvc;
+namespace dvc;
 
 class user extends _user {
 	var $id = 0;
-	protected $dto = FALSE;
+	protected $dto = false;
 
 	public function __construct() {
 		if ( ( $id = (int)session::get('uid')) > 0 ) {

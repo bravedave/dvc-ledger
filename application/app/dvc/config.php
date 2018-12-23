@@ -10,7 +10,7 @@
 	Description:
 		Global configuration file
 	*/
-NameSpace dvc;
+namespace dvc;
 
 abstract class config extends _config {
 
@@ -21,6 +21,6 @@ abstract class config extends _config {
 
 	static $WEBNAME = 'My Accounts';
 
-	const use_inline_logon = TRUE;
+	const use_inline_logon = true;
 
 }

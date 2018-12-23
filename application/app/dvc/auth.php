@@ -8,7 +8,7 @@
 		http://creativecommons.org/licenses/by/4.0/
 
 	*/
-NameSpace dvc;
+namespace dvc;
 
 abstract class auth extends _auth {
 	static function button() {

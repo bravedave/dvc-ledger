@@ -8,16 +8,16 @@
 		http://creativecommons.org/licenses/by/4.0/
 	*/
 
-spl_autoload_register(function ($class) {
+spl_autoload_register(function ( $class) {
 	if ( $lib = realpath( __DIR__ . '/app/' . str_replace('\\', '/', $class) . '.php')) {
 		include_once $lib;
 		dvc\sys::logloader( sprintf( 'app: %s', $lib ));
 
-		return ( TRUE);
+		return ( true);
 
 	}
 
-	return ( FALSE);
+	return ( false);
 
 });
 
@@ -30,11 +30,15 @@ $autoloadLocal = __DIR__ . '/../../dvc/autoloader-local.php';
 //~ print realpath( __DIR__ . '/../../dvc/autoloader-local.php') . '<br />';
 //~ die;
 
-if ( file_exists( $autoload))
+if ( file_exists( $autoload)) {
 	require_once $autoload;
 
-elseif ( file_exists( $autoloadLocal))
+}
+elseif ( file_exists( $autoloadLocal)) {
 	require_once $autoloadLocal;
 
-else
+}
+else {
 	throw new Exception( 'Unable to locate autoloader');
+
+}
