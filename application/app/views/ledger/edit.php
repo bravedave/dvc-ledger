@@ -78,7 +78,7 @@ function setupTrading() {
 	sel.html('');
 	$('<option value="">type</option>').appendTo( sel);
 	$.each( ledger.sections.trading, function( i, el) {
-		$('<option></option>').attr('value', i).html( el).appendTo( sel);
+		$('<option />').attr('value', i).html( el).appendTo( sel);
 
 	})
 

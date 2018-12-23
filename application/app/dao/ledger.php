@@ -85,27 +85,27 @@ class ledger extends _dao {
 
 	}
 
-	function trading() {
-		$_sql = 'SELECT
+	function trading( $start, $end) {
+		$_sql = sprintf( "SELECT
 			l.gl_code, l.gl_description, l.gl_type, SUM( t.glt_value) glt_value
 		FROM transactions t
 			LEFT JOIN
 				ledger l ON l.gl_code = t.glt_code
 		WHERE
-			l.gl_trading = 1
+			l.gl_trading = 1 AND t.glt_date BETWEEN '%s' AND '%s'
 		GROUP BY
 			t.glt_code
 		ORDER BY
-			l.gl_type';
+			l.gl_type", $start, $end);;
 
 		if ( $res = $this->Result( $_sql))
 			return ( $res->dtoSet());
 
-		return ( FALSE);
+		return ( false);
 
 	}
 
-	function balanceSheet() {
+	function balanceSheet( $end) {
 		$_sql = 'CREATE TEMPORARY TABLE _t (
 				id INTEGER PRIMARY KEY AUTOINCREMENT,
 				gl_code TEXT,
@@ -116,22 +116,23 @@ class ledger extends _dao {
 
 		$this->Q( $_sql);
 
-		$_sql = 'INSERT INTO  _t (gl_code, gl_description, gl_trading, gl_type, glt_value)
+		$_sql = sprintf( "INSERT INTO  _t (gl_code, gl_description, gl_trading, gl_type, glt_value)
 			SELECT
 				gl_code, gl_description, gl_trading, gl_type, glt_value
 			FROM ledger l
 				LEFT JOIN (
 					SELECT glt_code, SUM( glt_value) glt_value
 					FROM transactions
+					WHERE glt_date <= '%s'
 					GROUP BY glt_code) t
 				ON t.glt_code = l.gl_code
 			WHERE
 				gl_trading = 0
-			ORDER BY gl_trading ASC, gl_type ASC';
+			ORDER BY gl_trading ASC, gl_type ASC", $end);
 
 		$this->Q( $_sql);
 
-		$_sql = 'SELECT SUM( glt_gst) gst FROM transactions';
+		$_sql = sprintf( "SELECT SUM( glt_gst) gst FROM transactions WHERE glt_date <= '%s'", $end);
 
 		if ( $res = $this->Result( $_sql)) {
 			if ( $dto = $res->dto()) {
@@ -157,10 +158,12 @@ class ledger extends _dao {
 
 		}
 
-		$_sql = 'SELECT SUM( glt_value) glt_value
+		$_sql = sprintf( "SELECT SUM( glt_value) glt_value
 				FROM transactions
 				LEFT JOIN ledger ON gl_code = glt_code
-				WHERE ledger.gl_trading = 1';
+				WHERE
+					glt_date <= '%s'
+					AND ledger.gl_trading = 1", $end);
 
 		if ( $res = $this->Result( $_sql)) {
 			if ( $dto = $res->dto()) {
@@ -178,7 +181,7 @@ class ledger extends _dao {
 		if ( $res = $this->Result( 'SELECT * FROM _t ORDER BY gl_type'))
 			return ( $res->dtoSet());
 
-		return ( FALSE);
+		return ( false);
 
 	}
 

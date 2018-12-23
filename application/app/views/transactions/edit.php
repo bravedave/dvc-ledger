@@ -13,6 +13,7 @@
 	*/	?>
 <form method="POST" action="<?php url::write( 'transactions') ?>">
 	<input type="hidden" name="glt_type" value="journal" />
+
 	<table class="table table-striped table-sm" id="glt-journal">
 		<colgroup>
 			<col style="width: 10rem;" />
@@ -30,21 +31,21 @@
 					<input type="date" class="form-control" name="glt_date" value="<?php print $this->data->glt_date ?>" />
 
 				</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
+
 				<td>&nbsp;</td>
 
-			</tr>
+				<td colspan="2">
+					<div class="input-group">
+						<input type="text" class="form-control" name="glt_refer" value="<?php print $this->data->glt_refer ?>" />
 
-			<tr>
-				<td>refer</td>
-				<td>
-					<input type="text" class="form-control" name="glt_refer" value="<?php print $this->data->glt_refer ?>" />
+						<div class="input-group-append">
+							<div class="input-group-text">refer</div>
+
+						</div>
+
+					</div>
 
 				</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
 
 			</tr>
 
@@ -71,7 +72,7 @@
 
 		<tfoot>
 			<tr>
-				<td><a href="#" data-role="add-line">[add line]</a></td>
+				<td><a class="btn btn-light" href="#" data-role="add-line">add line <i class="fa fa-fw fa-plus"></i></a></td>
 				<td>&nbsp;</td>
 				<td class="text-right">GST</td>
 				<td class="text-right" data-role="gst">&nbsp;</td>
@@ -80,7 +81,7 @@
 			</tr>
 
 			<tr>
-				<td class="text-right"><input class="btn btn-default" data-role="save-button" type="submit" name="action" value="save transaction" /></td>
+				<td class="text-right"><input class="btn btn-outline-primary" data-role="save-button" type="submit" name="action" value="save transaction" /></td>
 				<td>&nbsp;</td>
 				<td class="text-right">Journal Total</td>
 				<td class="text-right" data-role="total">&nbsp;</td>

@@ -1,2 +1,3 @@
 a { color: inherit; }
 .bold { font-weight: bold; }
+[data-role="content-primary"] { width: 100%; display: block; flex: 1; max-width: -webkit-fill-available; }

@@ -8,6 +8,18 @@
 		http://creativecommons.org/licenses/by/4.0/
 	*/
 abstract class sys extends dvc\sys {
+	static function firstDayThisYear() {
+		if ( date( 'Y-m-d') > date( 'Y-06-30')) {
+			return date( 'Y-07-01');
+
+		}
+		else {
+			return ( sprintf( '%s-07-01', date('Y')-1));
+
+		}
+
+	}
+
 	static function name() {
 		$dao = new dao\settings;
 		return ( $dao->getName());

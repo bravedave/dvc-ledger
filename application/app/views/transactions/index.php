@@ -11,23 +11,26 @@
 <h4><a href="<?php url::write( 'transactions') ?>">transactions</a></h4>
 
 <ul class="list-unstyled">
-	<li>
-		<a href="#" id="<?php print $uidPay = uniqid() ?>">pay</a>
-
-	</li>
-
-	<li>
-		<a href="<?php url::write('transactions/edit/') ?>">journal</a>
-
-	</li>
+	<li><a href="#" id="<?= $uidReceipt = uniqid() ?>">receipt</a></li>
+	<li><a href="#" id="<?= $uidPay = uniqid() ?>">pay</a></li>
+	<li><a href="<?php url::write('transactions/edit/') ?>">journal</a></li>
+	<li><hr /></li>
+	<li><a href="<?php url::write('transactions/gst/') ?>">gst</a></li>
 
 </ul>
 <script>
 $(document).ready( function() {
-	$('#<?php print $uidPay ?>').on( 'click', function(e) {
+	$('#<?= $uidReceipt ?>').on( 'click', function(e) {
 		e.stopPropagation(); e.preventDefault();
-			_brayworth_.loadModal({
-			url : _brayworth_.url('transactions/pay')
+			_brayworth_.loadModal({ url : _brayworth_.url('transactions/receipt')
+
+		});
+
+	});
+
+	$('#<?= $uidPay ?>').on( 'click', function(e) {
+		e.stopPropagation(); e.preventDefault();
+			_brayworth_.loadModal({ url : _brayworth_.url('transactions/pay')
 
 		});
 

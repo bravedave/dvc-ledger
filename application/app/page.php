@@ -8,11 +8,10 @@
 		http://creativecommons.org/licenses/by/4.0/
 
 	*/
-class page extends dvc\pages\bootstrap {
-	static $addScripts = TRUE;
+class page extends dvc\pages\bootstrap4 {
+	static $addScripts = true;
 
 	function __construct( $title = '' ) {
-		self::$BootStrap_Version = '4';
 		self::$momentJS = self::$addScripts;
 
 		parent::__construct( $title );

@@ -14,14 +14,48 @@ Namespace dao;
 class transactions extends _dao {
 	protected $_db_name = 'transactions';
 
-	function getRecent() {
-		if ( $res = $this->getAll())
+	function getGSTRange( $start, $end) {
+		$sql = sprintf( "SELECT
+				t.*,
+				l.gl_description,
+				l.gl_type
+			FROM
+				`transactions` t
+				LEFT JOIN
+					`ledger` l ON l.gl_code = t.glt_code
+			WHERE
+				glt_date BETWEEN '%s' AND '%s' AND glt_gst <> 0
+			ORDER BY
+				gl_type ASC, glt_code ASC, glt_date DESC", $start, $end);
+
+		if ( $res = $this->Result( $sql)) {
 			return ( $res->dtoSet());
 
-		//~ if ( $res = $this->Result( sprintf( "SELECT * FROM ledger WHERE gl_code = '%s'", $this->escape( $code))))
-			//~ return ( $res->dto());
+		}
 
-		return ( FALSE);
+		return ( false);
+
+	}
+
+	function getRange( $start, $end) {
+		$sql = sprintf( "SELECT
+				t.*,
+				l.gl_description
+			FROM
+				`transactions` t
+				LEFT JOIN
+					`ledger` l ON l.gl_code = t.glt_code
+			WHERE
+				glt_date BETWEEN '%s' AND '%s'
+			ORDER BY
+				glt_code ASC, glt_date DESC", $start, $end);
+
+		if ( $res = $this->Result( $sql)) {
+			return ( $res->dtoSet());
+
+		}
+
+		return ( false);
 
 	}
 

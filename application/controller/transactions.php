@@ -18,6 +18,7 @@ class transactions extends Controller {
 	protected function postHandler() {
 		$action = $this->getPost('action');
 		if ( $action == 'save transaction') {
+			$format = $this->getPost('format');
 			//~ sys::dump( $_POST);
 
 			$a = [
@@ -27,9 +28,17 @@ class transactions extends Controller {
 				'glt_refer' => $this->getPost('glt_refer')];
 
 			$dao = new dao\transactions;
-			if ( 'payment' === $a['glt_type']) {
+			if ( 'payment' === $a['glt_type'] || 'receipt' === $a['glt_type']) {
 				$a['glt_code'] = $this->getPost('h_glt_code');
-				$a['glt_value'] = (float)$this->getPost('h_glt_value') * -1;
+				if ( 'payment' === $a['glt_type']) {
+
+					$a['glt_value'] = (float)$this->getPost('h_glt_value') * -1;
+				}
+				else {
+					$a['glt_value'] = (float)$this->getPost('h_glt_value');
+
+				}
+
 				// $a['glt_gst'] = $this->getPost('h_glt_gst');
 				$a['glt_comment'] = $this->getPost('h_glt_comment');
 				$dao->Insert( $a);
@@ -46,8 +55,16 @@ class transactions extends Controller {
 				for ( $i=0; $i < count( $codes); $i++) {
 					$a['glt_code'] = $codes[$i];
 					$a['glt_comment'] = $comments[$i];
-					$a['glt_value'] = $values[$i];
-					$a['glt_gst'] = $gsts[$i];
+					if ( 'receipt' === $a['glt_type']) {
+						$a['glt_value'] = $values[$i] * -1;
+						$a['glt_gst'] = $gsts[$i] * -1;
+
+					}
+					else {
+						$a['glt_value'] = $values[$i];
+						$a['glt_gst'] = $gsts[$i];
+
+					}
 
 					$jnl[] = (object)$a;
 
@@ -73,13 +90,13 @@ class transactions extends Controller {
 
 	}
 
-	function __construct( $rootPath) {
+	public function __construct( $rootPath) {
 		$this->RequireValidation = \sys::lockdown();
 		parent::__construct( $rootPath);
 
 	}
 
-	function edit( $id = 0) {
+	public function edit( $id = 0) {
 		$this->data = (object)[
 			'glt_date' => date( 'Y-m-d'),
 			'glt_refer' => '',
@@ -106,6 +123,25 @@ class transactions extends Controller {
 		$this->render([
 			'title' => $this->title = 'create / edit transaction',
 			'primary' => 'edit',
+			'secondary' => 'index']);
+
+	}
+
+	public function gst() {
+		$start = $this->getParam( 'start', sys::firstDayThisYear());
+		$end = $this->getParam( 'end', date( 'Y-m-d'));
+		$dao = new dao\transactions;
+		$this->data = (object)[
+			'start' => $start,
+			'end' => $end,
+			'dtoSet' => $dao->getGSTRange( $start, $end)
+		];
+
+		//~ sys::dump( $this->data);
+
+		$this->render([
+			'title' => $this->title = sprintf( 'gst : %s - %s', strings::asLocalDate( $start),  strings::asLocalDate( $end)),
+			'primary' => ['start-end', 'report-gst'],
 			'secondary' => 'index']);
 
 	}
@@ -145,17 +181,64 @@ class transactions extends Controller {
 
 	}
 
+	public function receipt() {
+		$this->data = (object)[
+			'glt_date' => date( 'Y-m-d'),
+			'glt_code' => 'bank',
+			'glt_refer' => '',
+			'glt_value' => 220,
+			'glt_gst' => 20,
+			'glt_comment' => 'Nice Lawn Mow',
+			'lines' => [
+				(object)[
+					'glt_code' => 'sales',
+					'glt_comment' => 'Trim Edges',
+					'glt_value' => 60,
+					'glt_gst' => 6
+				],
+				(object)[
+					'glt_code' => 'sales',
+					'glt_comment' => 'Cut Grass',
+					'glt_value' => 140,
+					'glt_gst' => 14
+				]
+			]
+		];
+
+		$u = true;
+		// $u = false;
+		if ( $u) {
+			$this->modal([
+				'title' => $this->title = 'receipt',
+				'class' => 'modal-lg',
+				'load' => 'receipt']);
+
+		}
+		else {
+			$this->render([
+				'title' => $this->title = 'receipt',
+				'primary' => 'receipt',
+				'secondary' => 'index']);
+
+		}
+
+	}
+
 	protected function _index() {
+		$start = $this->getParam( 'start', sys::firstDayThisYear());
+		$end = $this->getParam( 'end', date( 'Y-m-d'));
 		$dao = new dao\transactions;
 		$this->data = (object)[
-			'dtoSet' => $dao->getRecent()
+			'start' => $start,
+			'end' => $end,
+			'dtoSet' => $dao->getRange( $start, $end)
 		];
 
 		//~ sys::dump( $this->data);
 
 		$this->render([
-			'title' => $this->title = 'transactions',
-			'primary' => 'report',
+			'title' => $this->title = sprintf( 'transactions : %s - %s', strings::asLocalDate( $start),  strings::asLocalDate( $end)),
+			'primary' => ['start-end', 'report'],
 			'secondary' => 'index']);
 
 	}

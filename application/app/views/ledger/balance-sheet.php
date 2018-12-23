@@ -8,8 +8,11 @@
 		http://creativecommons.org/licenses/by/4.0/
 
 	*/ ?>
+<style media="print">
+@page {size: portrait; margin: 35px 35px 15px 35px; }
+</style>
 <table class="table table-sm">
-	<thead>
+	<thead class="small">
 		<tr>
 			<td>description</td>
 			<td style="width: 10em;" class="text-right">open</td>

@@ -8,29 +8,29 @@
 		http://creativecommons.org/licenses/by/4.0/
 
 	Description:
-		Payment Form
+		Receipt Form
 
 	*/	?>
 <div class="container">
-	<form id="<?php print $uidFrm = uniqid() ?>">
-		<input type="hidden" name="glt_type" value="payment" />
+	<form id="<?= $uidFrm = uniqid() ?>">
+		<input type="hidden" name="glt_type" value="receipt" />
 
 		<div class="row form-group">
-			<label class="col-2 col-form-label" for="<?php print $uidDate = uniqid() ?>">
+			<label class="col-2 col-form-label" for="<?= $uidDate = uniqid() ?>">
 				date
 
 			</label>
 
 			<div class="col col-md-6">
 				<input type="date" class="form-control" name="glt_date"
-					id="<?php print $uidDate ?>"
-					value="<?php print $this->data->glt_date ?>" />
+					id="<?= $uidDate ?>"
+					value="<?= $this->data->glt_date ?>" />
 
 			</div>
 
 			<div class="col">
 				<div class="input-group">
-					<input type="text" class="form-control" name="glt_refer" value="<?php print $this->data->glt_refer ?>" />
+					<input type="text" class="form-control" name="glt_refer" value="<?= $this->data->glt_refer ?>" />
 
 					<div class="input-group-append">
 						<div class="input-group-text">refer</div>
@@ -51,20 +51,20 @@
 
 			<div class="col col-md-6">
 				<input type="text" class="form-control" name="h_glt_code" id="h_glt_code"
-					value="<?php print $this->data->glt_code ?>" />
+					value="<?= $this->data->glt_code ?>" />
 
 			</div>
 
 		</div>
 
 		<div class="row form-group">
-			<label class="col-2 col-form-label" for="<?php print $uidGltValue = uniqid() ?>">
+			<label class="col-2 col-form-label" for="<?= $uidGltValue = uniqid() ?>">
 				value
 
 			</label>
 
 			<div class="col">
-				<input type="text" class="form-control" name="h_glt_value" id="<?php print $uidGltValue ?>" value="<?php print $this->data->glt_value ?>" />
+				<input type="text" class="form-control" name="h_glt_value" id="<?= $uidGltValue ?>" value="<?= $this->data->glt_value ?>" />
 
 			</div>
 
@@ -75,7 +75,7 @@
 
 					</div>
 
-					<input type="text" class="form-control" name="h_glt_gst" id="<?php print $uidGstValue = uniqid() ?>" value="<?php print $this->data->glt_gst ?>" />
+					<input type="text" class="form-control" name="h_glt_gst" id="<?= $uidGstValue = uniqid() ?>" value="<?= $this->data->glt_gst ?>" />
 
 
 				</div>
@@ -86,19 +86,19 @@
 
 		<div class="row form-group">
 			<label class="col-2 col-form-label" for="h_glt_comment">
-				payee
+				payer
 
 			</label>
 
 			<div class="col">
-				<input type="text" class="form-control" name="h_glt_comment" id="h_glt_comment" value="<?php print $this->data->glt_comment ?>" />
+				<input type="text" class="form-control" name="h_glt_comment" id="h_glt_comment" value="<?= $this->data->glt_comment ?>" />
 
 			</div>
 
 		</div>
 
 		<div class="row">
-			<div class="col" id="<?php print $uidJournal = uniqid() ?>">
+			<div class="col" id="<?= $uidJournal = uniqid() ?>">
 				<div class="row">
 					<div class="col-5 col-lg-2">code</div>
 					<div class="col-7 col-lg-5">description</div>
@@ -142,12 +142,12 @@
 			<div class="col-lg-5">
 				<div class="row">
 					<div class="col">
-						<button class="btn btn-outline-primary" id="<?php print $uidBtnSave = uniqid() ?>">save transaction</button>
+						<button class="btn btn-outline-primary" id="<?= $uidBtnSave = uniqid() ?>">save transaction</button>
 
 					</div>
 
 					<div class="col">
-						<a class="btn btn-light" href="#" id="<?php print $uidBtnAddLine = uniqid() ?>" data-role="add-line">add line <i class="fa fa-fw fa-plus"></i></a>
+						<a class="btn btn-light" href="#" id="<?= $uidBtnAddLine = uniqid() ?>" data-role="add-line">add line <i class="fa fa-fw fa-plus"></i></a>
 
 					</div>
 
@@ -166,7 +166,7 @@
 
 					</div>
 
-					<input type="text" class="form-control text-right" readonly id="<?php print $uidTotDisplay = uniqid() ?>" />
+					<input type="text" class="form-control text-right" readonly id="<?= $uidTotDisplay = uniqid() ?>" />
 
 				</div>
 
@@ -182,7 +182,7 @@
 
 					</div>
 
-					<input type="text" class="form-control text-right" readonly id="<?php print $uidGstDisplay = uniqid() ?>" />
+					<input type="text" class="form-control text-right" readonly id="<?= $uidGstDisplay = uniqid() ?>" />
 
 				</div>
 
@@ -214,7 +214,7 @@ $(document).ready( function() {
 	}
 
 	let totLines = function() {
-		let gltValue = $('#<?php print $uidGltValue ?>');
+		let gltValue = $('#<?= $uidGltValue ?>');
 		let v = Number( gltValue.val());
 		if ( isNaN( v)) v = 0;
 
@@ -223,7 +223,7 @@ $(document).ready( function() {
 		gltValue.val( v.formatCurrency());
 		//~ console.log( 'journal value', v);
 
-		let gstValue = $('#<?php print $uidGstValue ?>');
+		let gstValue = $('#<?= $uidGstValue ?>');
 		let g = Number( gstValue.val());
 		if ( isNaN( g)) g = 0;
 
@@ -234,7 +234,7 @@ $(document).ready( function() {
 		//~ console.log( 'journal values', v, g);
 			//~ return ( tot);
 
-		let lines = $('#<?php print $uidJournal ?> [line]');
+		let lines = $('#<?= $uidJournal ?> [line]');
 		if ( lines.length > 0) {
 			lines.each( function( i, el) {
 				let gltValue = $('input[name="glt_value[]"]', el);
@@ -259,30 +259,30 @@ $(document).ready( function() {
 			});
 
 			// console.log( 'v, g');
-			$('#<?php print $uidBtnSave ?>').prop( 'disabled', tot != 0);
+			$('#<?= $uidBtnSave ?>').prop( 'disabled', tot != 0);
 
 		}
 		else {
-			$('#<?php print $uidBtnSave ?>').prop( 'disabled', true);
+			$('#<?= $uidBtnSave ?>').prop( 'disabled', true);
 
 		}
 
-		$('#<?php print $uidGstDisplay ?>').val( (-gst).formatCurrency());
-		$('#<?php print $uidTotDisplay ?>').val( (-tot).formatCurrency());
+		$('#<?= $uidGstDisplay ?>').val( (-gst).formatCurrency());
+		$('#<?= $uidTotDisplay ?>').val( (-tot).formatCurrency());
 
 		return ( tot);
 
 	}
 
-	$('#<?php print $uidFrm ?>').on('submit', function() {
+	$('#<?= $uidFrm ?>').on('submit', function() {
 		return ( false);
 
 	});
 
-	$('#<?php print $uidBtnSave ?>').on( 'click', function( e) {
+	$('#<?= $uidBtnSave ?>').on( 'click', function( e) {
 		e.stopPropagation(); e.preventDefault();
 
-		let frm = $('#<?php print $uidFrm ?>');
+		let frm = $('#<?= $uidFrm ?>');
 		let data = frm.serializeFormJSON();
 		data.action = 'save transaction';
 		data.format = 'json';
@@ -301,7 +301,7 @@ $(document).ready( function() {
 
 	totLines();	// disable submit button
 
-	$('#<?php print $uidBtnAddLine ?>').on( 'click', function( e) {
+	$('#<?= $uidBtnAddLine ?>').on( 'click', function( e) {
 		e.stopPropagation(); e.preventDefault();
 		console.log( 'add line');
 
@@ -312,7 +312,7 @@ $(document).ready( function() {
 		value.on('change', totLines);
 		gst.on('change', totLines);
 
-		let row = $('<div class="row form-group" line />').appendTo( $('#<?php print $uidJournal ?>'));
+		let row = $('<div class="row form-group" line />').appendTo( $('#<?= $uidJournal ?>'));
 		$('<div class="col-5 col-lg-2" />').append( code).appendTo( row);
 		$('<div class="col-7 col-lg-5" />').append( comment).appendTo( row);
 
@@ -339,7 +339,7 @@ $(document).ready( function() {
 	(function() {
 		codeFill( $('#h_glt_code'));
 
-		let lines = $('#<?php print $uidJournal ?> [line]');
+		let lines = $('#<?= $uidJournal ?> [line]');
 		if ( lines.length > 0) {
 			lines.each( function( i, el) {
 				codeFill( $('input[name="glt_code[]"]', el));
@@ -349,6 +349,8 @@ $(document).ready( function() {
 			});
 
 		}
+
+		$('#<?= $uidGltValue ?>, #<?= $uidGstValue ?>').on('change', totLines);
 
 	})();
 

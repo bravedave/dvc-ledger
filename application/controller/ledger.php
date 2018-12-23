@@ -92,31 +92,37 @@ class ledger extends Controller {
 	}
 
 	public function balanceSheet() {
+		$end = $this->getParam( 'end', date( 'Y-m-d'));
 		$dao = new dao\ledger;
 		$this->data = (object)[
-			'dtoSet' => $dao->balanceSheet()
+			'end' => $end,
+			'dtoSet' => $dao->balanceSheet( $end)
 		];
 
 		//~ sys::dump( $this->data);
 
 		$this->render([
-			'title' => $this->title = 'balance sheet',
-			'primary' => 'balance-sheet',
+			'title' => $this->title = sprintf( 'balance sheet as at : %s', strings::asLocalDate( $end)),
+			'primary' => ['end', 'balance-sheet'],
 			'secondary' => 'index']);
 
 	}
 
 	public function trading() {
+		$start = $this->getParam( 'start', sys::firstDayThisYear());
+		$end = $this->getParam( 'end', date( 'Y-m-d'));
 		$dao = new dao\ledger;
 		$this->data = (object)[
-			'dtoSet' => $dao->trading()
+			'start' => $start,
+			'end' => $end,
+			'dtoSet' => $dao->trading( $start, $end)
 		];
 
 		//~ sys::dump( $this->data);
 
 		$this->render([
-			'title' => $this->title = 'trading statement',
-			'primary' => 'trading-statement',
+			'title' => $this->title = sprintf( 'trading statement : %s - %s', strings::asLocalDate( $start),  strings::asLocalDate( $end)),
+			'primary' => ['start-end', 'trading-statement'],
 			'secondary' => 'index']);
 
 	}

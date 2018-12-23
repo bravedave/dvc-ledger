@@ -8,21 +8,13 @@
 		http://creativecommons.org/licenses/by/4.0/
 
 	*/	?>
-<table class="table table-striped table-sm">
-	<colgroup>
-		<col style="width: 7em;" />
-		<col style="width: 7em;" />
-		<col />
-		<col style="width: 12em;" />
-
-	</colgroup>
-
-	<thead>
+<table class="table table-sm">
+	<thead class="small">
 		<tr>
-			<td>code</td>
-			<td>type</td>
+			<td style="width: 7em;">code</td>
+			<td style="width: 7em;">type</td>
 			<td>description</td>
-			<td class="text-center">value</td>
+			<td style="width: 12em;" class="text-right">value</td>
 		</tr>
 
 	</thead>
@@ -56,7 +48,7 @@
 
 <div class="row">
 	<div class="col">
-		[<a href="<?php url::write( 'ledger/edit') ?>">new account</a>]
+		<a class="btn btn-light" href="<?php url::write( 'ledger/edit') ?>">new account</a>
 
 	</div>
 
@@ -64,9 +56,9 @@
 <script>
 $(document).ready( function() {
 	$('tr[data-role="ledger-item"]').each( function( i, el) {
-		var _el = $(el);
+		let _el = $(el);
 		_el
-		.css({'cursor':'pointer'})
+		.addClass('pointer')
 		.on( 'click', function( e) {
 			window.location.href = _brayworth_.urlwrite( 'ledger/edit/' + _el.data( 'id'));
 

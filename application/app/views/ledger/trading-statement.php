@@ -8,7 +8,10 @@
 		http://creativecommons.org/licenses/by/4.0/
 
 	*/ ?>
-<table class="table table-striped table-sm">
+<style media="print">
+@page {size: portrait; margin: 35px 35px 15px 35px; }
+</style>
+<table class="table table-sm">
 	<colgroup>
 		<col />
 		<col style="width: 10em;" />
@@ -16,7 +19,7 @@
 
 	</colgroup>
 
-	<thead>
+	<thead class="small">
 		<tr>
 			<td>description</td>
 			<td class="text-center">last</td>
