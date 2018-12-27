@@ -1,5 +1,5 @@
 <?php
-/**
+/*
 	David Bray
 	BrayWorth Pty Ltd
 	e. david@brayworth.com.au
@@ -11,7 +11,7 @@
     Description file for transaction table
 
 	*/
-Namespace dvc\sqlite;
+namespace dvc\sqlite;
 
 $dbc = new dbCheck( $this->db, 'transactions' );
 $dbc->defineField( 'glt_code', 'text');
@@ -22,4 +22,5 @@ $dbc->defineField( 'glt_timestamp', 'text');
 $dbc->defineField( 'glt_comment', 'text');
 $dbc->defineField( 'glt_value', 'float');
 $dbc->defineField( 'glt_gst', 'float');
+$dbc->defineField( 'glt_gst_remit', 'int');
 $dbc->check();

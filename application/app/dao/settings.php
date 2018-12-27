@@ -9,7 +9,7 @@
 
 	*/
 
-Namespace dao;
+namespace dao;
 
 class settings extends _dao {
 	protected $_db_name = 'settings';

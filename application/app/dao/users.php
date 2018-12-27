@@ -9,7 +9,7 @@
 
 	*/
 
-Namespace dao;
+namespace dao;
 
 class users extends _dao {
 	protected $_db_name = 'users';

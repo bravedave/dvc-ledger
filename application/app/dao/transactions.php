@@ -9,10 +9,13 @@
 
 	*/
 
-Namespace dao;
+namespace dao;
 
 class transactions extends _dao {
 	protected $_db_name = 'transactions';
+
+	const gst_remitted = 1;
+	const gst_paid = 2;
 
 	function getGSTRange( $start, $end) {
 		$sql = sprintf( "SELECT

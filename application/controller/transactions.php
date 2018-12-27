@@ -17,7 +17,27 @@
 class transactions extends Controller {
 	protected function postHandler() {
 		$action = $this->getPost('action');
-		if ( $action == 'save transaction') {
+		if ( $action == 'gst_remit') {
+			if ( $id = (int)$this->getPost('id')) {
+				$val = (int)$this->getPost('value');
+				$a = [
+						'glt_gst_remit' => $val
+
+				];
+
+				$dao = new dao\transactions;
+				$dao->UpdateByID( $a, $id);
+
+				\Json::ack( sprintf( '%s - %s', $action, $val ? 'on' : 'off'));
+
+			}
+			else {
+				\Json::nak( $action);
+
+			}
+
+		}
+		elseif ( $action == 'save transaction') {
 			$format = $this->getPost('format');
 			//~ sys::dump( $_POST);
 
