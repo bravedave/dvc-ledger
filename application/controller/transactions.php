@@ -199,6 +199,43 @@ class transactions extends Controller {
 
 	}
 
+	public function paygst() {
+		$dao = new dao\transactions;
+		if ( $dto = $dao->getGSTRemited()) {
+
+			// $this->data = $dto;
+
+			$this->data = (object)[
+				'glt_date' => date( 'Y-m-d'),
+				'glt_code' => 'bank',
+				'glt_refer' => 'gst-pay',
+				'glt_value' => $dto->totalGST,
+				'glt_gst' => 0,
+				'glt_comment' => 'GST Installment',
+				'lines' => [
+					(object)[
+						'glt_code' => 'gst',
+						'glt_comment' => 'GST Installment',
+						'glt_value' => $dto->totalGST,
+						'glt_gst' => 0
+
+					]
+
+				]
+
+			];
+
+			$this->modal([
+				'title' => $this->title = 'pay',
+				'class' => 'modal-full',
+				'load' => 'pay'
+
+			]);
+
+		}
+
+	}
+
 	public function receipt() {
 		$this->data = (object)[
 			'glt_date' => date( 'Y-m-d'),

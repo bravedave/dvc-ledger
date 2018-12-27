@@ -23,17 +23,13 @@
 $(document).ready( function() {
 	$('#<?= $uidReceipt ?>').on( 'click', function(e) {
 		e.stopPropagation(); e.preventDefault();
-			_brayworth_.loadModal({ url : _brayworth_.url('transactions/receipt')
-
-		});
+		_brayworth_.loadModal({ url : _brayworth_.url('transactions/receipt')});
 
 	});
 
 	$('#<?= $uidPay ?>').on( 'click', function(e) {
 		e.stopPropagation(); e.preventDefault();
-			_brayworth_.loadModal({ url : _brayworth_.url('transactions/pay')
-
-		});
+		_brayworth_.loadModal({ url : _brayworth_.url('transactions/pay')});
 
 	});
 

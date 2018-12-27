@@ -19,9 +19,9 @@
 		<tr>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
-			<td class="text-right">Value</td>
-			<td class="text-right">GST</td>
-			<td style="width: 3em;">&nbsp;</td>
+			<td style="width: 8em;" class="text-right">Value</td>
+			<td style="width: 8em;" class="text-right">GST</td>
+			<td style="width: 5em;">&nbsp;</td>
 
 		</tr>
 
@@ -101,7 +101,7 @@
 
 			<?php
 		}	?>
-				
+
 	</tbody>
 
 	<tfoot>
@@ -127,13 +127,14 @@
 		<tr>
 			<td class="text-right" colspan="3">GST Remitted:</td>
 			<td class="text-right" id="<?= $uidRemitted = uniqid('dvc_'); ?>">&nbsp;</td>
-			<td>&nbsp;</td>
+			<td class="text-center" id="<?= $uidRemitPay = uniqid('dvc_'); ?>">&nbsp;</td>
 
 		</tr>
 
 	</tfoot>
 
 </table>
+
 <script>
 $(document).ready(function() {
 	let remitState = function( state) {
@@ -158,6 +159,7 @@ $(document).ready(function() {
 
 	$('#<?= $uidBody ?>').on( 'remit-total', function( e) {
 		let tGST = 0;
+		let count = 0;
 
 		$('[data-remit="yes"]', this).each( function( i, icon) {
 			let _r = $(icon).closest('tr');
@@ -172,9 +174,30 @@ $(document).ready(function() {
 
 			}
 
+			count ++;
+
 		});
 
 		$('#<?= $uidRemitted ?>').html( tGST.formatCurrency());
+		if ( count > 0) {
+
+			if ( $('#<?= $uidRemitPay ?> > button').length < 1) {
+				let btn = $('<button class="btn btn-sm btn-primary">pay</button>');
+				btn.on( 'click', function( e) {
+					e.stopPropagation(); e.preventDefault();
+					_brayworth_.loadModal({ url : _brayworth_.url('transactions/paygst')});
+
+				});
+
+				$('#<?= $uidRemitPay ?>').html('').append( btn);
+
+			}
+
+		}
+		else {
+			$('#<?= $uidRemitPay ?>').html('&nbsp;');
+
+		}
 
 	});
 

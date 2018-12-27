@@ -40,6 +40,65 @@ class transactions extends _dao {
 
 	}
 
+	function getGSTRemited() {
+		$sql = sprintf('SELECT
+			 	l.gl_code,
+				CASE l.gl_type
+				 	WHEN "a" THEN "output"
+					ELSE "input"
+				END type,
+				t.glt_value,
+				t.glt_gst
+			FROM transactions t
+			 	LEFT JOIN
+				 	ledger l ON l.gl_code = t.glt_code
+			WHERE
+			 	glt_gst_remit = 1
+			GROUP BY
+				CASE l.gl_type
+				 	WHEN "a" THEN "output"
+					ELSE "input"
+				END
+			ORDER BY
+			 	l.gl_type');
+
+		if ( $res = $this->Result( $sql)) {
+			$ret = (object)[
+				'output' => 0,
+				'outputGST' => 0,
+				'input' => 0,
+				'inputGST' => 0,
+				'total' => 0,
+				'totalGST' => 0
+
+			];
+
+			$res->dtoSet( function( $dto) use ( $ret) {
+				if ( 'output' == $dto->type) {
+					$ret->output -= $dto->glt_value;
+					$ret->total -= $dto->glt_value;
+					$ret->outputGST -= $dto->glt_gst;
+					$ret->totalGST -= $dto->glt_gst;
+
+				}
+				else {
+					$ret->input += $dto->glt_value;
+					$ret->total -= $dto->glt_value;
+					$ret->inputGST += $dto->glt_gst;
+					$ret->totalGST -= $dto->glt_gst;
+
+				}
+
+			});
+
+			return $ret;
+
+		}
+
+		return ( false);
+
+	}
+
 	function getRange( $start, $end) {
 		$sql = sprintf( "SELECT
 				t.*,
