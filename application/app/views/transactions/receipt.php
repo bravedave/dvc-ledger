@@ -22,14 +22,15 @@
 
 			<div class="col col-md-6">
 				<input type="date" class="form-control" name="glt_date"
-				id="<?= $uidDate ?>"
-				value="<?= $this->data->glt_date ?>" />
+					id="<?= $uidDate ?>"
+					value="<?= $this->data->glt_date ?>" />
 
 			</div>
 
 			<div class="col">
 				<div class="input-group">
-					<input type="text" class="form-control" name="glt_refer" value="<?= $this->data->glt_refer ?>" />
+					<input type="text" class="form-control" name="glt_refer"
+					 	value="<?= $this->data->glt_refer ?>" />
 
 					<div class="input-group-append">
 						<div class="input-group-text">refer</div>
@@ -63,7 +64,9 @@
 			</label>
 
 			<div class="col">
-				<input type="text" class="form-control" name="h_glt_value" id="<?= $uidGltValue ?>" value="<?= $this->data->glt_value ?>" />
+				<input type="text" class="form-control" name="h_glt_value"
+				 	id="<?= $uidGltValue ?>"
+					value="<?= $this->data->glt_value ?>" />
 
 			</div>
 
@@ -74,7 +77,9 @@
 
 					</div>
 
-					<input type="text" class="form-control" name="h_glt_gst" id="<?= $uidGstValue = uniqid() ?>" value="<?= $this->data->glt_gst ?>" />
+					<input type="text" class="form-control" name="h_glt_gst"
+					 	id="<?= $uidGstValue = uniqid() ?>"
+						value="<?= $this->data->glt_gst ?>" />
 
 
 				</div>
@@ -90,7 +95,9 @@
 			</label>
 
 			<div class="col">
-				<input type="text" class="form-control" name="h_glt_comment" id="h_glt_comment" value="<?= $this->data->glt_comment ?>" />
+				<input type="text" class="form-control" name="h_glt_comment"
+					id="h_glt_comment"
+					value="<?= $this->data->glt_comment ?>" />
 
 			</div>
 
@@ -99,19 +106,19 @@
 		<div class="row">
 			<div class="col" id="<?= $uidJournal = uniqid() ?>">
 				<div class="row">
-					<div class="col-5 col-lg-2">code</div>
-					<div class="col-7 col-lg-5">description</div>
-					<div class="d-none d-lg-block col-lg-3">value</div>
-					<div class="d-none d-lg-block col-lg-2">gst</div>
+					<div class="col-5 col-md-2">code</div>
+					<div class="col-7 col-md-5">description</div>
+					<div class="d-none d-md-block col-md-3">value</div>
+					<div class="d-none d-md-block col-md-2">gst</div>
 
 				</div>
 
 				<?php
 				foreach ( $this->data->lines as $l) {
 					print '<div class="row form-group" line>';
-					printf( '<div class="col-5 col-lg-2"><input type="text" class="form-control" name="glt_code[]" value="%s" /></div>', $l->glt_code);
-					printf( '<div class="col-7 col-lg-5"><input type="text" class="form-control" name="glt_comment[]" value="%s" /></div>', $l->glt_comment);
-					printf( '<div class="col-7 col-lg-3">
+					printf( '<div class="col-5 col-md-2"><input type="text" class="form-control" name="glt_code[]" value="%s" /></div>', $l->glt_code);
+					printf( '<div class="col-7 col-md-5"><input type="text" class="form-control" name="glt_comment[]" value="%s" /></div>', $l->glt_comment);
+					printf( '<div class="col-7 col-md-3">
 					<div class="input-group">
 					<div class="input-group-prepend">
 					<div class="input-group-text">$</div>
@@ -121,17 +128,16 @@
 
 					</div>', $l->glt_value);
 
-					printf( '<div class="col-5 col-lg-2 pl-lg-0">
+					printf( '<div class="col-5 col-md-2 pl-md-0">
 					<div class="input-group">
-					<div class="input-group-prepend">
-					<div class="input-group-text">$</div>
-					</div>
+					<div class="input-group-prepend"><div class="input-group-text">$</div></div>
 					<input type="text" class="form-control text-right" name="glt_gst[]" value="%s" />
 					</div>
 
 					</div>', $l->glt_gst);
 
 					print '</div>';
+
 				}	?>
 
 			</div>
@@ -139,7 +145,7 @@
 		</div>
 
 		<div class="row">
-			<div class="col-lg-5">
+			<div class="col-md-5">
 				<div class="row">
 					<div class="col">
 						<button class="btn btn-outline-primary" id="<?= $uidBtnSave = uniqid() ?>">save transaction</button>
@@ -155,8 +161,8 @@
 
 			</div>
 
-			<div class="col-3 col-lg-2 pt-lg-0 pt-2">un allocated</div>
-			<div class="col-5 col-lg-3 pt-lg-0 pt-2">
+			<div class="col-3 col-md-2 pt-md-0 pt-2">un allocated</div>
+			<div class="col-5 col-md-3 pt-md-0 pt-2">
 				<div class="input-group input-group-sm">
 					<div class="input-group-prepend">
 						<div class="input-group-text">
@@ -172,7 +178,7 @@
 
 			</div>
 
-			<div class="col-4 col-lg-2 pt-lg-0 pt-2 pl-lg-0">
+			<div class="col-4 col-md-2 pt-md-0 pt-2 pl-md-0">
 				<div class="input-group input-group-sm">
 					<div class="input-group-prepend">
 						<div class="input-group-text">
@@ -189,8 +195,9 @@
 			</div>
 
 		</div>
-		
+
 	</form>
+
 	<script>
 		$(document).ready( function() {
 			let codeFill = function( code) {
@@ -210,28 +217,75 @@
 
 			}
 
-			let totLines = function() {
+			let jnlValue = function() {
 				let gltValue = $('#<?= $uidGltValue ?>');
 				let v = Number( gltValue.val());
 				if ( isNaN( v)) v = 0;
 
 				let tot = v;
+				if ( gltValue.val() != v.formatCurrency()) {
+					gltValue.val( v.formatCurrency());
 
-				gltValue.val( v.formatCurrency());
-				//~ console.log( 'journal value', v);
+				}
 
+				// console.log( 'journal value', v);
+				return ( v);
+
+			}
+
+			let jnlGST = function() {
 				let gstValue = $('#<?= $uidGstValue ?>');
 				let g = Number( gstValue.val());
 				if ( isNaN( g)) g = 0;
 
 				let gst = g;
+				if ( gstValue.val() != g.formatCurrency()) {
+					gstValue.val( g.formatCurrency());
 
-				gstValue.val( g.formatCurrency());
+				}
 
-				//~ console.log( 'journal values', v, g);
-				//~ return ( tot);
+				// console.log( 'journal gst', g);
+				return ( g);
 
-				let lines = $('#<?= $uidJournal ?> [line]');
+			}
+
+			let linetriggers = function( fldVal, fldGst) {
+				fldVal.on('change', function(e) {
+					let v = parseFloat( fldVal.val());
+					if ( v > 0) {
+						let tot = jnlValue();
+						let gst = jnlGST();
+						if ( tot != 0 && gst != 0) {
+							let xgst = tot - gst;
+							if ( xgst != 0) {
+								let rate = gst / xgst;
+								if ( rate != 0) {
+									let g = rate * v;
+									fldGst.val( g.formatCurrency());
+
+								}
+
+							}
+
+						}
+
+					}
+
+					journal.trigger('totlines');
+
+				});
+				fldGst.on('change', function(e) { journal.trigger('totlines'); });
+
+			}
+
+			let journal = $('#<?= $uidJournal ?>');
+			journal.on('totlines', function(e) {
+				let tot = jnlValue();
+				let gst = jnlGST();
+
+				// console.log( 'journal values', gst, tot);
+
+				let lines = $('[line]', this);
 				if ( lines.length > 0) {
 					lines.each( function( i, el) {
 						let gltValue = $('input[name="glt_value[]"]', el);
@@ -267,14 +321,41 @@
 				$('#<?= $uidGstDisplay ?>').val( (-gst).formatCurrency());
 				$('#<?= $uidTotDisplay ?>').val( (-tot).formatCurrency());
 
-				return ( tot);
+			});
 
-			}
+			journal.on('addline', function(e) {
+				let code = $('<input type="text" class="form-control" name="glt_code[]" />');
+				let comment = $('<input type="text" class="form-control" name="glt_comment[]" />');
+				let value = $('<input type="text" class="form-control text-right" name="glt_value[]" />');
+				let gst = $('<input type="text" class="form-control text-right" name="glt_gst[]" />');
 
-			$('#<?= $uidFrm ?>').on('submit', function() {
-				return ( false);
+				linetriggers( value, gst);
+
+				let row = $('<div class="row form-group" line />').appendTo( $('#<?= $uidJournal ?>'));
+				$('<div class="col-5 col-md-2" />').append( code).appendTo( row);
+				$('<div class="col-7 col-md-5" />').append( comment).appendTo( row);
+
+				(function() {
+					let col = $('<div class="col-7 col-md-3" />').appendTo( row);
+					let ig = $('<div class="input-group" />').append( value).appendTo( col);
+
+					ig.prepend( '<div class="input-group-prepend"><div class="input-group-text">$</div></div>');
+
+				})();
+
+				(function() {
+					let col = $('<div class="col-5 col-md-2 pl-md-0" />').appendTo( row);
+					let ig = $('<div class="input-group" />').append( gst).appendTo( col);
+
+					ig.prepend( '<div class="input-group-prepend"><div class="input-group-text">$</div></div>');
+
+				})();
+
+				codeFill( code);
 
 			});
+
+			$('#<?= $uidFrm ?>').on('submit', function() { return ( false); });
 
 			$('#<?= $uidBtnSave ?>').on( 'click', function( e) {
 				e.stopPropagation(); e.preventDefault();
@@ -296,42 +377,13 @@
 
 			});
 
-			totLines();	// disable submit button
-
 			$('#<?= $uidBtnAddLine ?>').on( 'click', function( e) {
 				e.stopPropagation(); e.preventDefault();
-				console.log( 'add line');
-
-				let code = $('<input type="text" class="form-control" name="glt_code[]" />');
-				let comment = $('<input type="text" class="form-control" name="glt_comment[]" />');
-				let value = $('<input type="text" class="form-control text-right" name="glt_value[]" />');
-				let gst = $('<input type="text" class="form-control text-right" name="glt_gst[]" />');
-				value.on('change', totLines);
-				gst.on('change', totLines);
-
-				let row = $('<div class="row form-group" line />').appendTo( $('#<?= $uidJournal ?>'));
-				$('<div class="col-5 col-lg-2" />').append( code).appendTo( row);
-				$('<div class="col-7 col-lg-5" />').append( comment).appendTo( row);
-
-				(function() {
-					let col = $('<div class="col-7 col-lg-3" />').appendTo( row);
-					let ig = $('<div class="input-group" />').append( value).appendTo( col);
-
-					ig.prepend( '<div class="input-group-prepend"><div class="input-group-text">$</div></div>');
-
-				})();
-
-				(function() {
-					let col = $('<div class="col-5 col-lg-2 pl-lg-0" />').appendTo( row);
-					let ig = $('<div class="input-group" />').append( gst).appendTo( col);
-
-					ig.prepend( '<div class="input-group-prepend"><div class="input-group-text">$</div></div>');
-
-				})();
-
-				codeFill( code);
+				journal.trigger('addline');
 
 			});
+
+			journal.trigger('totlines');	// disable submit button
 
 			(function() {
 				codeFill( $('#h_glt_code'));
@@ -340,14 +392,18 @@
 				if ( lines.length > 0) {
 					lines.each( function( i, el) {
 						codeFill( $('input[name="glt_code[]"]', el));
-						$('input[name="glt_value[]"]', el).on('change', totLines);
-						$('input[name="glt_gst[]"]', el).on('change', totLines);
+						let value = $('input[name="glt_value[]"]', el);
+						let gst = $('input[name="glt_gst[]"]', el);
+						linetriggers( value, gst);
 
 					});
 
 				}
 
-				$('#<?= $uidGltValue ?>, #<?= $uidGstValue ?>').on('change', totLines);
+				$('#<?= $uidGltValue ?>, #<?= $uidGstValue ?>').on('change', function(e) {
+					journal.trigger('totlines');
+
+				});
 
 			})();
 

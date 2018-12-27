@@ -16,6 +16,7 @@
 	<li><a href="<?php url::write('transactions/edit/') ?>">journal</a></li>
 	<li><hr /></li>
 	<li><a href="<?php url::write('transactions/gst/') ?>">gst</a></li>
+	<li><hr /></li>
 
 </ul>
 <script>

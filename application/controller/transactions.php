@@ -122,7 +122,7 @@ class transactions extends Controller {
 		$this->render([
 			'title' => $this->title = 'create / edit transaction',
 			'primary' => 'edit',
-			'secondary' => 'index'
+			'secondary' => ['index', 'ledger/index']
 
 		]);
 
@@ -143,7 +143,7 @@ class transactions extends Controller {
 		$this->render([
 			'title' => $this->title = sprintf( 'gst : %s - %s', strings::asLocalDate( $start),  strings::asLocalDate( $end)),
 			'primary' => ['start-end', 'report-gst'],
-			'secondary' => 'index'
+			'secondary' => ['index', 'ledger/index']
 
 		]);
 
@@ -170,10 +170,10 @@ class transactions extends Controller {
 
 		];
 
-		$this->render([
+		$this->modal([
 			'title' => $this->title = 'pay',
-			'primary' => 'pay',
-			'secondary' => 'index'
+			'class' => 'modal-full',
+			'load' => 'pay'
 
 		]);
 
@@ -199,10 +199,10 @@ class transactions extends Controller {
 
 		];
 
-		$this->render([
+		$this->modal([
 			'title' => $this->title = 'receipt',
-			'primary' => 'receipt',
-			'secondary' => 'index'
+			'class' => 'modal-full',
+			'load' => 'receipt'
 
 		]);
 
@@ -223,7 +223,7 @@ class transactions extends Controller {
 		$this->render([
 			'title' => $this->title = sprintf( 'transactions : %s - %s', strings::asLocalDate( $start),  strings::asLocalDate( $end)),
 			'primary' => ['start-end', 'report'],
-			'secondary' => 'index'
+			'secondary' => ['index', 'ledger/index']
 
 		]);
 

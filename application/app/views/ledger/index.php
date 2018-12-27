@@ -10,10 +10,8 @@
 	*/	?>
 <h4><a href="<?php url::write( 'ledger') ?>">ledger</a></h4>
 <ul class="list-unstyled">
-	<li><a href="<?php url::write( 'ledger/trial') ?>">trial balance</a></li>
 	<li><a href="<?php url::write( 'ledger/balanceSheet') ?>">balance sheet</a></li>
 	<li><a href="<?php url::write( 'ledger/trading') ?>">trading report</a></li>
-	<li><a href="<?php url::write( 'transactions/gst') ?>">gst</a></li>
 	<li><hr /></li>
+
 </ul>
-<?php $this->load('transactions/index'); ?>

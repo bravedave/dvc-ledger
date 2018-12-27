@@ -8,7 +8,7 @@
 		http://creativecommons.org/licenses/by/4.0/
 	*/
 class home extends Controller {
-	protected $firstRun = FALSE;
+	protected $firstRun = false;
 
 	protected function _authorize() {
 		$action = $this->getPost( 'action');
@@ -88,7 +88,7 @@ class home extends Controller {
 			$this->render([
 				'title' => $this->title = sys::name(),
 				'primary' => 'readme',
-				'secondary' => 'main-index'
+				'secondary' => ['ledger/index', 'transactions/index', 'main-index']
 
 			]);
 
@@ -118,9 +118,20 @@ class home extends Controller {
 
 	}
 
-	//~ public function info() {
-		//~ phpinfo();
+	function info() {
+		/* default setting
+		 * in case you forget to disable this on a production server
+		 * - only running on localhost
+		 */
+		if ( Request::ServerIsLocal()) {
+			$this->render([
+				'title' => 'hello world',
+				'primary' => 'info',
+				'secondary' =>'blank'
+			]);
 
-	//~ }
+		}
+
+	}
 
 }

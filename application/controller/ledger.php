@@ -72,24 +72,9 @@ class ledger extends Controller {
 		$this->render([
 			'title' => $this->title = 'create / edit account',
 			'primary' => 'edit',
-			'secondary' => 'index'
+			'secondary' => ['index','transactions/index']
 
 		]);
-
-	}
-
-	public function trial() {
-		$dao = new dao\ledger;
-		$this->data = (object)[
-			'dtoSet' => $dao->trialBalance()
-		];
-
-		//~ sys::dump( $this->data);
-
-		$this->render([
-			'title' => $this->title = 'trial balance',
-			'primary' => 'trial-balance',
-			'secondary' => 'index']);
 
 	}
 
@@ -106,7 +91,9 @@ class ledger extends Controller {
 		$this->render([
 			'title' => $this->title = sprintf( 'balance sheet as at : %s', strings::asLocalDate( $end)),
 			'primary' => ['end', 'balance-sheet'],
-			'secondary' => 'index']);
+			'secondary' => ['index','transactions/index']
+
+		]);
 
 	}
 
@@ -125,15 +112,24 @@ class ledger extends Controller {
 		$this->render([
 			'title' => $this->title = sprintf( 'trading statement : %s - %s', strings::asLocalDate( $start),  strings::asLocalDate( $end)),
 			'primary' => ['start-end', 'trading-statement'],
-			'secondary' => 'index']);
+			'secondary' => ['index','transactions/index']
+
+		]);
 
 	}
 
-	protected function _index() {
+	public function _index() {
+		$dao = new dao\ledger;
+		$this->data = (object)[
+			'dtoSet' => $dao->trialBalance()
+		];
+
+		//~ sys::dump( $this->data);
+
 		$this->render([
-			'title' => $this->title = 'ledger',
-			'primary' => 'blank',
-			'secondary' => 'index'
+			'title' => $this->title = 'trial balance',
+			'primary' => 'trial-balance',
+			'secondary' => ['index','transactions/index']
 
 		]);
 

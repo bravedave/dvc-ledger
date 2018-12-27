@@ -1,3 +1,12 @@
 a { color: inherit; }
 .bold { font-weight: bold; }
 [data-role="content-primary"] { width: 100%; display: block; flex: 1; max-width: -webkit-fill-available; }
+
+.modal-full {
+    min-width: 100%;
+    margin: 0;
+}
+
+.modal-full .modal-content {
+    min-height: 100vh;
+}
