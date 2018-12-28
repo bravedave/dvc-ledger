@@ -41,18 +41,24 @@ class transactions extends Controller {
 			$format = $this->getPost('format');
 			//~ sys::dump( $_POST);
 
+			$dao = new dao\settings;
+			$transaction = $dao->getTransaction();
+
 			$a = [
 				'glt_timestamp' => db::dbTimeStamp(),
 				'glt_type' => $this->getPost('glt_type'),
 				'glt_date' => $this->getPost('glt_date'),
-				'glt_refer' => $this->getPost('glt_refer')];
+				'glt_refer' => $this->getPost('glt_refer'),
+				'glt_transaction' => $transaction
+
+			];
 
 			$dao = new dao\transactions;
 			if ( 'payment' === $a['glt_type'] || 'receipt' === $a['glt_type']) {
 				$a['glt_code'] = $this->getPost('h_glt_code');
 				if ( 'payment' === $a['glt_type']) {
-
 					$a['glt_value'] = (float)$this->getPost('h_glt_value') * -1;
+
 				}
 				else {
 					$a['glt_value'] = (float)$this->getPost('h_glt_value');
@@ -70,6 +76,7 @@ class transactions extends Controller {
 			$comments = $this->getPost( 'glt_comment');
 			$values = $this->getPost( 'glt_value');
 			$gsts = $this->getPost( 'glt_gst');
+			$gstID = 0;
 			$jnl = [];
 			if ( count( $codes) == count( $comments) && count( $codes) == count( $values)) {
 				for ( $i=0; $i < count( $codes); $i++) {
@@ -87,8 +94,12 @@ class transactions extends Controller {
 					}
 
 					$jnl[] = (object)$a;
-
 					$dao->Insert( $a);
+
+				}
+
+				if ( (bool)$this->getPost('glt_gstpayment')) {
+					$dao->flagRemitedGST( $transaction);
 
 				}
 
@@ -99,12 +110,14 @@ class transactions extends Controller {
 			}
 
 			//~ sys::dump( $jnl);
-			if ( $format == 'json')
+			if ( $format == 'json') {
 				\Json::ack( $action);
 
-			else
+			}
+			else {
 				Response::redirect( 'transactions', 'posted transaction');
 
+			}
 
 		}
 
@@ -124,7 +137,7 @@ class transactions extends Controller {
 
 		];
 		// (object)[
-		// 	'glt_code' => 'bank',
+		// 	'glt_code' => \config::gl_bank,
 		// 	'glt_comment' => 'Bunnings Hardware',
 		// 	'glt_value' => -110,
 		// 	'glt_gst' => 0
@@ -172,11 +185,12 @@ class transactions extends Controller {
 	public function pay() {
 		$this->data = (object)[
 			'glt_date' => date( 'Y-m-d'),
-			'glt_code' => 'bank',
+			'glt_code' => \config::gl_bank,
 			'glt_refer' => '',
 			'glt_value' => 0,
 			'glt_gst' => 0,
 			'glt_comment' => '',
+			'glt_gstpayment' => false,
 			'lines' => [
 				(object)[
 					'glt_code' => 'expenses',
@@ -207,14 +221,15 @@ class transactions extends Controller {
 
 			$this->data = (object)[
 				'glt_date' => date( 'Y-m-d'),
-				'glt_code' => 'bank',
+				'glt_code' => \config::gl_bank,
 				'glt_refer' => 'gst-pay',
 				'glt_value' => $dto->totalGST,
 				'glt_gst' => 0,
 				'glt_comment' => 'GST Installment',
+				'glt_gstpayment' => true,
 				'lines' => [
 					(object)[
-						'glt_code' => 'gst',
+						'glt_code' => \config::gl_gst,
 						'glt_comment' => 'GST Installment',
 						'glt_value' => $dto->totalGST,
 						'glt_gst' => 0
@@ -239,7 +254,7 @@ class transactions extends Controller {
 	public function receipt() {
 		$this->data = (object)[
 			'glt_date' => date( 'Y-m-d'),
-			'glt_code' => 'bank',
+			'glt_code' => \config::gl_bank,
 			'glt_refer' => '',
 			'glt_value' => 0,
 			'glt_gst' => 0,

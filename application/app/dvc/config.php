@@ -14,6 +14,9 @@ namespace dvc;
 
 abstract class config extends _config {
 
+	const gl_bank = 'bank';
+	const gl_gst = 'gst';
+
 	static $DB_TYPE = 'sqlite';
 	static $DATE_FORMAT = 'd-M-y';
 

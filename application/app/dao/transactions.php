@@ -17,6 +17,20 @@ class transactions extends _dao {
 	const gst_remitted = 1;
 	const gst_paid = 2;
 
+	function flagRemitedGST( $transaction) {
+		$a = [
+			'gst_transaction' => $transaction,
+			'glt_gst_remit' => self::gst_paid
+
+		];
+
+		$this->Update( $a,
+			sprintf('WHERE glt_gst_remit = %d', self::gst_remitted)
+
+		);
+
+	}
+
 	function getGSTRange( $start, $end) {
 		$sql = sprintf( "SELECT
 				t.*,

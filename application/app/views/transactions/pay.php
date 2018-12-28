@@ -13,6 +13,7 @@
 	*/	?>
 	<form id="<?= $uidFrm = uniqid() ?>">
 		<input type="hidden" name="glt_type" value="payment" />
+		<input type="hidden" name="glt_gstpayment" value="<?= (int)$this->data->glt_gstpayment?>" />
 
 		<div class="row form-group">
 			<label class="col-2 col-form-label" for="<?= $uidDate = uniqid() ?>">

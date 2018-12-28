@@ -76,7 +76,7 @@
 			$count ++;
 			?>
 			<tr
-			data-remittable="yes"
+			data-remittable="<?= dao\transactions::gst_paid == $dto->glt_gst_remit ? 'no' : 'yes' ?>"
 			data-id="<?= $dto->id ?>"
 			data-output="<?= ( $output ? 'yes' : 'no' ) ?>"
 			data-value="<?= number_format( (float)$dto->glt_value*$factor, 2); ?>"
@@ -87,7 +87,11 @@
 			<td class="text-right text-muted"><?= number_format( (float)$dto->glt_value*$factor, 2); ?></td>
 			<td class="text-right text-muted"><?= number_format( (float)$dto->glt_gst*$factor, 2); ?></td>
 			<td class="text-center" remit><?php
-				if ( $dto->glt_gst_remit == dao\transactions::gst_remitted ) {
+				if ( dao\transactions::gst_paid == $dto->glt_gst_remit) {
+					print 'paid';
+
+				}
+				elseif ( dao\transactions::gst_remitted == $dto->glt_gst_remit ) {
 					printf( '<i class="fa fa-check" data-remit="yes" data-id="%s"></i>', $dto->id);
 
 				}

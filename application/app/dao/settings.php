@@ -15,41 +15,61 @@ class settings extends _dao {
 	protected $_db_name = 'settings';
 
 	function firstRun() {
-		/**
-		 * test if the settings table exists
-		 * if it does - it is not first run
-		 */
+		/*
+		test if the settings table exists
+		if it does - it is not first run
+		*/
 
-		if ( $res = $this->Result( "SELECT name FROM sqlite_master WHERE type='table' AND name='settings';"))
+		if ( $res = $this->Result( "SELECT name FROM sqlite_master WHERE type='table' AND name='settings';")) {
 			return ( !$res->dto());
 
-		return ( TRUE);
+		}
+
+		return ( true);
 
 	}
 
 	function getFirst() {
-		if ( $res = $this->Result( "SELECT * FROM settings"))
+		if ( $res = $this->Result( "SELECT * FROM settings")) {
 			return ( $res->dto());
 
-		return ( FALSE);
+		}
+
+		return ( false);
 
 	}
 
 	function getName() {
-		if ( $dto = $this->getFirst())
+		if ( $dto = $this->getFirst()) {
 			return ( $dto->name);
+
+		}
 
 		return ( \config::$WEBNAME);
 
 	}
 
-	function lockdown( $set = NULL) {
-		$lockdown = FALSE;
+	function getTransaction() {
+		if ( $dto = $this->getFirst()) {
+			$dto->transaction++;
+			$this->UpdateByID( [ 'transaction' => $dto->transaction], $dto->id);
+			return ( $dto->transaction);
+
+		}
+
+		return ( 0);
+
+	}
+
+	function lockdown( $set = null) {
+		$lockdown = false;
 		if ( $dto = $this->getFirst()) {
 			$lockdown = (int)$dto->lockdown;
 
-			if ( !is_null( $set))
+			if ( !is_null( $set)) {
 				$this->Q( sprintf( "UPDATE `settings` SET `lockdown` = %d", (int)$set));
+
+			}
 
 		}
 

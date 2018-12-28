@@ -23,4 +23,6 @@ $dbc->defineField( 'glt_comment', 'text');
 $dbc->defineField( 'glt_value', 'float');
 $dbc->defineField( 'glt_gst', 'float');
 $dbc->defineField( 'glt_gst_remit', 'int');
+$dbc->defineField( 'glt_transaction', 'int');
+$dbc->defineField( 'gst_transaction', 'int');
 $dbc->check();

@@ -13,6 +13,7 @@ Namespace dvc\sqlite;
 $dbc = new dbCheck( $this->db, 'settings' );
 $dbc->defineField( 'name', 'text');
 $dbc->defineField( 'lockdown', 'int');
+$dbc->defineField( 'transaction', 'int');
 $dbc->check();
 
 if ( $res = $this->db->Result( 'SELECT count(*) count FROM settings' )) {
