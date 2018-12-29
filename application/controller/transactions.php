@@ -162,20 +162,24 @@ class transactions extends Controller {
 	}
 
 	public function gst() {
+		$paid = (bool)( $this->getParam('paid') == 'yes');
 		$start = $this->getParam( 'start', sys::firstDayThisYear());
 		$end = $this->getParam( 'end', date( 'Y-m-d'));
 		$dao = new dao\transactions;
 		$this->data = (object)[
 			'start' => $start,
 			'end' => $end,
-			'dtoSet' => $dao->getGSTRange( $start, $end)
+			'paid' => $paid,
+			'dtoSet' => $dao->getGSTRange( $start, $end, $paid)
 		];
 
 		//~ sys::dump( $this->data);
+		$this->title = sprintf( 'gst : %s - %s', strings::asLocalDate( $start),  strings::asLocalDate( $end));
+		if ( $paid) $this->title .= ' - including paid';
 
 		$this->render([
-			'title' => $this->title = sprintf( 'gst : %s - %s', strings::asLocalDate( $start),  strings::asLocalDate( $end)),
-			'primary' => ['start-end', 'report-gst'],
+			'title' => $this->title,
+			'primary' => ['start-end-gst', 'report-gst'],
 			'secondary' => ['index', 'ledger/index']
 
 		]);

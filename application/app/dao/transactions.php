@@ -31,7 +31,17 @@ class transactions extends _dao {
 
 	}
 
-	function getGSTRange( $start, $end) {
+	function getGSTRange( $start, $end, $paid = false) {
+		$where = [
+			sprintf( "t.glt_date BETWEEN '%s' AND '%s'", $start, $end),
+			"t.glt_gst <> 0"
+		];
+
+		if ( !$paid) {
+			$where[] = sprintf( "t.glt_gst_remit < %s", self::gst_paid);
+
+		}
+
 		$sql = sprintf( "SELECT
 				t.*,
 				l.gl_description,
@@ -40,10 +50,9 @@ class transactions extends _dao {
 				`transactions` t
 				LEFT JOIN
 					`ledger` l ON l.gl_code = t.glt_code
-			WHERE
-				glt_date BETWEEN '%s' AND '%s' AND glt_gst <> 0
+			WHERE %s
 			ORDER BY
-				gl_type ASC, glt_code ASC, glt_date DESC", $start, $end);
+				gl_type ASC, glt_code ASC, glt_date DESC", implode( ' AND ', $where));
 
 		if ( $res = $this->Result( $sql)) {
 			return ( $res->dtoSet());

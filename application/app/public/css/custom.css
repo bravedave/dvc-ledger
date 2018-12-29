@@ -10,3 +10,6 @@ a { color: inherit; }
 .modal-full .modal-content {
     min-height: 100vh;
 }
+
+.input-group-sm>input[type="date"],
+input[type="date"] { padding-right: 0; }

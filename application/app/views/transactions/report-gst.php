@@ -14,21 +14,28 @@
 
 	//
 	?>
+<style>
+@media print{
+	@page {size: portrait; margin: 40px 20px 40px 20px; }
+	html { font-size: 12px; }
+}
+</style>
+
 <table class="table table-sm">
 	<thead class="small">
 		<tr>
-			<td>&nbsp;</td>
-			<td>&nbsp;</td>
-			<td style="width: 8em;" class="text-right">Value</td>
-			<td style="width: 8em;" class="text-right">GST</td>
-			<td style="width: 5em;">&nbsp;</td>
+			<td class="border-0">&nbsp;</td>
+			<td class="border-0">&nbsp;</td>
+			<td style="width: 8em;" class="text-right border-0">Value</td>
+			<td style="width: 8em;" class="text-right border-0">GST</td>
+			<td style="width: 5em;" class="border-0">&nbsp;</td>
 
 		</tr>
 
 	</thead>
 	<tbody id="<?= $uidBody = uniqid('dvc_'); ?>">
 		<tr>
-			<td colspan="5">Outputs</td>
+			<td colspan="5" class="border-0">Outputs</td>
 
 		</tr>
 		<?php
@@ -52,7 +59,7 @@
 					</tr>
 
 					<tr>
-						<td colspan="5">Inputs</td>
+						<td colspan="5" class="border-0">Inputs</td>
 
 					</tr>
 					<?php
@@ -76,12 +83,12 @@
 			$count ++;
 			?>
 			<tr
-			data-remittable="<?= dao\transactions::gst_paid == $dto->glt_gst_remit ? 'no' : 'yes' ?>"
-			data-id="<?= $dto->id ?>"
-			data-output="<?= ( $output ? 'yes' : 'no' ) ?>"
-			data-value="<?= number_format( (float)$dto->glt_value*$factor, 2); ?>"
-			data-gst="<?= number_format( (float)$dto->glt_gst*$factor, 2); ?>"
-			>
+				data-remittable="<?= dao\transactions::gst_paid == $dto->glt_gst_remit ? 'no' : 'yes' ?>"
+				data-id="<?= $dto->id ?>"
+				data-output="<?= ( $output ? 'yes' : 'no' ) ?>"
+				data-value="<?= number_format( (float)$dto->glt_value*$factor, 2); ?>"
+				data-gst="<?= number_format( (float)$dto->glt_gst*$factor, 2); ?>"
+				>
 			<td><?= strings::asShortDate( $dto->glt_date); ?></td>
 			<td><?= $dto->glt_comment; ?></td>
 			<td class="text-right text-muted"><?= number_format( (float)$dto->glt_value*$factor, 2); ?></td>
@@ -120,18 +127,18 @@
 			</tr>
 
 			<tr>
-				<td class="text-right" colspan="3">GST Payable:</td>
+				<td class="text-right border-0" colspan="3">GST Payable:</td>
 				<td class="text-right"><?= number_format( (float)$outputGst - (float)$inputGst, 2) ?></td>
-				<td>&nbsp;</td>
+				<td class="border-0">&nbsp;</td>
 
 			</tr>
 			<?php
 		}	?>
 
 		<tr>
-			<td class="text-right" colspan="3">GST Remitted:</td>
+			<td class="text-right border-0" colspan="3">GST Remitted:</td>
 			<td class="text-right" id="<?= $uidRemitted = uniqid('dvc_'); ?>">&nbsp;</td>
-			<td class="text-center" id="<?= $uidRemitPay = uniqid('dvc_'); ?>">&nbsp;</td>
+			<td class="text-center border-0" id="<?= $uidRemitPay = uniqid('dvc_'); ?>">&nbsp;</td>
 
 		</tr>
 
