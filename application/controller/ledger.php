@@ -58,23 +58,46 @@ class ledger extends Controller {
 
 	}
 
-	function edit( $id = 0) {
+	function edit( $id = 0, $viewer = 'edit') {
 		$this->data = (object)[
 			'dto' => false
 		];
 
 		if ( $id = (int)$id) {
 			$dao = new dao\ledger;
-			$this->data->dto = $dao->getByID( $id);
+			if ( !( $this->data->dto = $dao->getByID( $id))) {
+				throw new \Exceptions\AccountNotFound;
+
+			}
+
+		}
+		else {
+			$viewer = 'edit';
+
+		}
+
+		if ( !in_array(  $viewer, [ 'edit', 'view'])) {
+			$viewer = 'view';
+
+		}
+
+		if ( 'view' == $viewer) {
+			$dao = new dao\transactions;
+			$this->data->dto->balance = $dao->getBalance( $this->data->dto);
 
 		}
 
 		$this->render([
 			'title' => $this->title = 'create / edit account',
-			'primary' => 'edit',
+			'primary' => $viewer,
 			'secondary' => ['index','transactions/index']
 
 		]);
+
+	}
+
+	function view( $id = 0) {
+		$this->edit( $id, 'view');
 
 	}
 

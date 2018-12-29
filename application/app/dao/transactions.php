@@ -31,6 +31,37 @@ class transactions extends _dao {
 
 	}
 
+	function getBalance( dto\dto $gl) {
+		$sql = sprintf( "SELECT
+					sum(glt_value) balance
+				FROM
+				 	transactions
+				WHERE
+				 	glt_code = '%s'", $gl->gl_code);
+
+		if ( $res = $this->Result( $sql)) {
+			if ( $dto = $res->dto()) {
+				if ( $gl->gl_code == \config::gl_gst) {
+					if ( $res = $this->Result('SELECT sum( glt_gst) gst from transactions')) {
+						if ( $_ = $res->dto()) {
+							$dto->balance += $_->gst;
+
+						}
+
+					}
+
+				}
+
+				return ( $dto);
+
+			}
+
+		}
+
+		return false;
+
+	}
+
 	function getGSTRange( $start, $end, $paid = false) {
 		$where = [
 			sprintf( "t.glt_date BETWEEN '%s' AND '%s'", $start, $end),
@@ -141,6 +172,30 @@ class transactions extends _dao {
 		}
 
 		return ( false);
+
+	}
+
+	function getTransactionsByLedger( dto\dto $gl) {
+		$sql = sprintf( "SELECT
+				t.*,
+				l.gl_description
+			FROM
+				`transactions` t
+				LEFT JOIN
+					`ledger` l ON l.gl_code = t.glt_code
+			WHERE
+				glt_code = '%s'
+			ORDER BY
+				glt_date DESC", $gl->gl_code
+
+		);
+
+		if ( $res = $this->Result( $sql)) {
+			return $res->dtoSet();
+
+		}
+
+		return false;
 
 	}
 

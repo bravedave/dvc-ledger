@@ -129,6 +129,36 @@ class transactions extends Controller {
 
 	}
 
+	public function account( $id = 0) {
+		$this->data = (object)[
+			'dto' => false
+		];
+
+		if ( $id = (int)$id) {
+			$dao = new dao\ledger;
+			if ( $this->data->dto = $dao->getByID( $id)) {
+				$daoT = new dao\transactions;
+				if ( $this->data->dtoSet = $daoT->getTransactionsByLedger( $this->data->dto)) {
+						$this->render([
+							'title' => $this->title = sprintf( 'transaction report : %s', $this->data->dto->gl_description),
+							'primary' => 'report',
+							'secondary' => ['index', 'ledger/index']
+
+						]);
+
+
+				}
+
+			}
+			else {
+				throw new \Exceptions\AccountNotFound;
+
+			}
+
+		}
+
+	}
+
 	public function edit( $id = 0) {
 		$this->data = (object)[
 			'glt_date' => date( 'Y-m-d'),

@@ -25,10 +25,10 @@
 	<form class="form" method="post" action="<?php url::write('ledger') ?>">
 		<input type="hidden" name="id" value="<?= $dto->id ?>" />
 
-		<div class="row">
+		<div class="row form-group">
 			<div class="col-3">code</div>
 
-			<div class="col-9">
+			<div class="col-9 col-md-6 col-lg-4 col-xl-3">
 				<input type="text" class="form-control" name="gl_code" value="<?= $dto->gl_code ?>"
 				<?php if ( $dto->id > 0) print 'disabled'; ?> />
 
@@ -36,7 +36,7 @@
 
 		</div>
 
-		<div class="row pt-4">
+		<div class="row form-group">
 			<div class="col-3">description</div>
 			<div class="col-9">
 				<input type="text" class="form-control" name="gl_description" value="<?= $dto->gl_description ?>" />
@@ -45,19 +45,25 @@
 
 		</div>
 
-		<div class="row pt-4">
+		<div class="row form-group">
 			<div class="offset-3 col-9">
-				<label>
-					<input type="checkbox" class="form-control-checkbox" name="gl_trading" <?php if ( $dto->gl_trading) print 'checked' ?> value="1" />
-					trading account
+				<div class="form-check">
+					<input type="checkbox" class="form-check-input" name="gl_trading" value="1"
+					 	id="<?= $uid = uniqid('dvc_') ?>"
+					 	<?php if ( $dto->gl_trading) print 'checked' ?> />
 
-				</label>
+					<label for="<?= $uid ?>" class="form-check-label">
+						trading account
+
+					</label>
+
+				</div>
 
 			</div>
 
 		</div>
 
-		<div class="row pt-4">
+		<div class="row form-group">
 			<div class="col-3">account type</div>
 			<div class="col-9">
 				<select class="form-control" name="gl_type" data-value="<?= $dto->gl_type ?>"></select>
@@ -66,9 +72,10 @@
 
 		</div>
 
-		<div class="row pt-4">
+		<div class="row">
 			<div class="offset-3 col-9">
 				<input type="submit" class="btn btn-primary" name="action" value="add/update" />
+				<a href="<?php url::write('ledger/view/' . $dto->id ) ?>" class="btn btn-outline-secondary">cancel</a>
 
 			</div>
 

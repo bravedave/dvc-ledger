@@ -65,7 +65,7 @@
 			_el
 			.addClass('pointer')
 			.on( 'click', function( e) {
-				window.location.href = _brayworth_.urlwrite( 'ledger/edit/' + _el.data( 'id'));
+				window.location.href = _brayworth_.urlwrite( 'ledger/view/' + _el.data( 'id'));
 
 			})
 

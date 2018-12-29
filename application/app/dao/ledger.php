@@ -18,7 +18,25 @@ class ledger extends _dao {
 		if ( $res = $this->Result( sprintf( "SELECT * FROM ledger WHERE gl_code = '%s'", $this->escape( $code))))
 			return ( $res->dto());
 
-		return ( FALSE);
+		return ( false);
+
+	}
+
+	static function ledgerType( bool $trading, string $section) {
+		if ( $trading) {
+			if ( 'a' == $section) return 'income';
+			if ( 'b' == $section) return 'cost of sales';
+			if ( 'c' == $section) return 'expenses';
+
+		}
+		else {
+			if ( 'a' == $section) return 'asset';
+			if ( 'b' == $section) return 'liability';
+			if ( 'c' == $section) return 'equity';
+
+		}
+
+		return 'unknown';
 
 	}
 
