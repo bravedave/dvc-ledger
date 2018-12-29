@@ -8,9 +8,9 @@
 		http://creativecommons.org/licenses/by/4.0/
 
 	*/ ?>
-	<style media="print">
-	@page {
-		size: portrait; margin: 35px 35px 15px 35px;
+	<style>
+	@media print{
+		@page {size: portrait; margin: 40px 20px 40px 20px; }
 	}
 	</style>
 	<table class="table table-sm">

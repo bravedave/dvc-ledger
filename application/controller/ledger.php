@@ -59,6 +59,7 @@ class ledger extends Controller {
 	}
 
 	function edit( $id = 0, $viewer = 'edit') {
+		$this->title = 'create / edit account';
 		$this->data = (object)[
 			'dto' => false
 		];
@@ -84,11 +85,12 @@ class ledger extends Controller {
 		if ( 'view' == $viewer) {
 			$dao = new dao\transactions;
 			$this->data->dto->balance = $dao->getBalance( $this->data->dto);
+			$this->title = sprintf('%s : view account', $this->data->dto->gl_description);
 
 		}
 
 		$this->render([
-			'title' => $this->title = 'create / edit account',
+			'title' => $this->title,
 			'primary' => $viewer,
 			'secondary' => ['index','transactions/index']
 

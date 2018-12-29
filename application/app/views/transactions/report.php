@@ -11,7 +11,6 @@
 	<style>
 	@media print{
 		@page {size: portrait; margin: 40px 20px 40px 20px; }
-		html { font-size: 12px; }
 	}
 	</style>
 

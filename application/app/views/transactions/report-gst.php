@@ -10,16 +10,12 @@
 	Outputs gl_type a
 	Inputs gl_type b & c
 
-	*/
-
-	//
-	?>
-<style>
-@media print{
-	@page {size: portrait; margin: 40px 20px 40px 20px; }
-	html { font-size: 12px; }
-}
-</style>
+	*/	?>
+	<style>
+	@media print{
+		@page {size: portrait; margin: 40px 20px 40px 20px; }
+	}
+	</style>
 
 <table class="table table-sm">
 	<thead class="small">

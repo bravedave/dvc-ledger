@@ -130,7 +130,11 @@ class transactions extends Controller {
 	}
 
 	public function account( $id = 0) {
+		$start = $this->getParam( 'start', sys::firstDayThisYear());
+		$end = $this->getParam( 'end', date( 'Y-m-d'));
 		$this->data = (object)[
+			'start' => $start,
+			'end' => $end,
 			'dto' => false
 		];
 
@@ -138,22 +142,24 @@ class transactions extends Controller {
 			$dao = new dao\ledger;
 			if ( $this->data->dto = $dao->getByID( $id)) {
 				$daoT = new dao\transactions;
-				if ( $this->data->dtoSet = $daoT->getTransactionsByLedger( $this->data->dto)) {
-						$this->render([
-							'title' => $this->title = sprintf( 'transaction report : %s', $this->data->dto->gl_description),
-							'primary' => 'report',
-							'secondary' => ['index', 'ledger/index']
+				$this->data->dtoSet = $daoT->getTransactionsByLedger( $this->data->dto, $start, $end);
 
-						]);
+				$this->render([
+					'title' => $this->title = sprintf( 'transaction report : %s', $this->data->dto->gl_description),
+					'primary' => ['start-end-of-account','report-of-account'],
+					'secondary' => ['index', 'ledger/index']
 
-
-				}
+				]);
 
 			}
 			else {
 				throw new \Exceptions\AccountNotFound;
 
 			}
+
+		}
+		else {
+			throw new \Exceptions\AccountNotSpecified;
 
 		}
 
@@ -166,21 +172,6 @@ class transactions extends Controller {
 			'lines' => []
 
 		];
-		// (object)[
-		// 	'glt_code' => \config::gl_bank,
-		// 	'glt_comment' => 'Bunnings Hardware',
-		// 	'glt_value' => -110,
-		// 	'glt_gst' => 0
-		//
-		// ],
-		// (object)[
-		// 	'glt_code' => 'expenses',
-		// 	'glt_comment' => 'Hammer & Chisel',
-		// 	'glt_value' => 100,
-		// 	'glt_gst' => 10
-		//
-		// ]
-
 
 		$this->render([
 			'title' => $this->title = 'create / edit transaction',

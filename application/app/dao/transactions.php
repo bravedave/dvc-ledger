@@ -175,7 +175,7 @@ class transactions extends _dao {
 
 	}
 
-	function getTransactionsByLedger( dto\dto $gl) {
+	function getTransactionsByLedger( dto\dto $gl, $start, $end) {
 		$sql = sprintf( "SELECT
 				t.*,
 				l.gl_description
@@ -184,9 +184,10 @@ class transactions extends _dao {
 				LEFT JOIN
 					`ledger` l ON l.gl_code = t.glt_code
 			WHERE
-				glt_code = '%s'
+				glt_date BETWEEN '%s' AND '%s'
+				AND glt_code = '%s'
 			ORDER BY
-				glt_date DESC", $gl->gl_code
+				glt_date DESC", $start, $end, $gl->gl_code
 
 		);
 
