@@ -17,8 +17,8 @@ as -ve.
    * but if you select settings > lockdown and save
      * you will require a username/password to gain access
      * default user/pass = **admin** / **admin**
-     
-## Install
+
+#### Install
 To use DVC on a Windows 10 computer (Devel Environment)
 1. Install PreRequisits
   * Install PHP : http://windows.php.net/download/
@@ -51,7 +51,7 @@ To use DVC on a Windows 10 computer (Devel Environment)
   * cd my-ledger
 1. run *composer install*
 
-To run the demo
+#### To run the demo
   * Review the run.cmd
     * The program is now accessible: http://localhost
     * Run this from the command prompt to see any errors - there may be a firewall
