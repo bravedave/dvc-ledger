@@ -1,6 +1,6 @@
 #### DVC Ledger
 
-This is a simple ledger built using the DVC-Auth template
+This is a simple ledger built using the DVC Framework
 
 #### Brief
 The Ledger is a single transaction file, debits are held as positive and credits as negative.
