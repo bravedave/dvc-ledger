@@ -21,7 +21,8 @@
 	"require": {
 		"php": ">=7.0",
 		"bravedave/dvc": "dev-master",
-		"ext-sqlite3": "*"
+		"ext-sqlite3": "*",
+		"parsecsv/php-parsecsv": "^1.1"
 
 	}
 
