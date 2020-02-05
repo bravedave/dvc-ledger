@@ -52,13 +52,30 @@ class ledger extends Controller {
 
 	}
 
-	function __construct( $rootPath) {
+	protected function _index() {
+		$dao = new dao\ledger;
+		$this->data = (object)[
+			'dtoSet' => $dao->trialBalance()
+		];
+
+		//~ sys::dump( $this->data);
+
+		$this->render([
+			'title' => $this->title = 'trial balance',
+			'primary' => 'trial-balance',
+			'secondary' => ['index','transactions/index']
+
+		]);
+
+	}
+
+	public function __construct( $rootPath) {
 		$this->RequireValidation = \sys::lockdown();
 		parent::__construct( $rootPath);
 
 	}
 
-	function edit( $id = 0, $viewer = 'edit') {
+	public function edit( $id = 0, $viewer = 'edit') {
 		$this->title = 'create / edit account';
 		$this->data = (object)[
 			'dto' => false
@@ -98,7 +115,7 @@ class ledger extends Controller {
 
 	}
 
-	function view( $id = 0) {
+	public function view( $id = 0) {
 		$this->edit( $id, 'view');
 
 	}
@@ -143,27 +160,10 @@ class ledger extends Controller {
 
 	}
 
-	public function _index() {
-		$dao = new dao\ledger;
-		$this->data = (object)[
-			'dtoSet' => $dao->trialBalance()
-		];
-
-		//~ sys::dump( $this->data);
-
-		$this->render([
-			'title' => $this->title = 'trial balance',
-			'primary' => 'trial-balance',
-			'secondary' => ['index','transactions/index']
-
-		]);
-
-	}
-
 	function index() {
 		$this->isPost() ?
-      $this->postHandler() :
-      $this->_index();
+			$this->postHandler() :
+      		$this->_index();
 
 	}
 

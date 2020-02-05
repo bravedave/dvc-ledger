@@ -9,7 +9,7 @@
 	*/
 namespace dvc;
 
-class user extends _user {
+class user extends core\user {
 	var $id = 0;
 	protected $dto = false;
 

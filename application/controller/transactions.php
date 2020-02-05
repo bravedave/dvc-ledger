@@ -326,11 +326,4 @@ class transactions extends Controller {
 
 	}
 
-	function index() {
-		$this->isPost() ?
-      $this->postHandler() :
-      $this->_index();
-
-	}
-
 }

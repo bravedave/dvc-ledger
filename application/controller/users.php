@@ -87,14 +87,7 @@ class users extends Controller {
 
 	}
 
-	function index() {
-		$this->isPost() ?
-			$this->postHandler() :
-			$this->_index();
-
-	}
-
-	function edit( $id = 0) {
+	public function edit( $id = 0) {
 		$this->data = (object)[
 			'dto' => (object)[
 				'id' => 0,

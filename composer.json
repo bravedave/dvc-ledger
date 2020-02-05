@@ -1,6 +1,6 @@
 {
 	"name": "bravedave/dvc-legdger",
-	"description": "DVC-LEDGER - a simple ledger built using the DVC-Auth template",
+	"description": "DVC-LEDGER - a simple ledger based on DVC System",
 	"version": "0.0.1",
 	"minimum-stability": "dev",
 	"prefer-stable": true,

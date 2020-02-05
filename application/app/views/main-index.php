@@ -10,10 +10,21 @@
 	*/	?>
 <h4>maintenance</h4>
 <ul class="list-unstyled">
-	<li><a href="<?php url::write('users') ?>">users</a></li>
-	<li><a href="<?php url::write('settings') ?>">settings</a></li>
-	<li><a href="<?php url::write('home/dbinfo') ?>">dbinfo</a></li>
+	<li><a href="<?= strings::url('users') ?>">users</a></li>
+	<li><a href="<?= strings::url('settings') ?>">settings</a></li>
+	<li><a href="<?= strings::url('home/dbinfo') ?>">dbinfo</a></li>
+<?php
+	if ( qbimport::files()) {	?>
+	<li><a href="<?= strings::url('import') ?>">QB Import</a></li>
+<?php
+	}	?>
 	<li><hr /></li>
-	<li><a href="<?php url::write('docs') ?>">docs</a></li>
+<?php
+	if ( $this->Request->ServerIsLocal()) {	?>
+	<li><a href="<?= strings::url('info') ?>">info</a></li>
+
+<?php
+	}	// if ( $this->Request->ServerIsLocal())	?>
+	<li><a href="<?= strings::url('docs') ?>">docs</a></li>
 
 </ul>

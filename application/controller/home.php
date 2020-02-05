@@ -75,22 +75,35 @@ class home extends Controller {
 
 	}
 
-	public function index( $data = '' ) {
-		if ( $this->isPost()) {
-			$this->postHandler();
+	public function _index( $data = '' ) {
+		$this->render([
+			'title' => $this->title = sys::name(),
+			'primary' => 'readme',
+			'secondary' => ['ledger/index', 'transactions/index', 'main-index']
 
-		}
-		elseif ( $this->firstRun) {
+		]);
+
+	}
+
+	public function dbinfo() {
+		$this->render([
+			'title' => 'dbinfo',
+			'primary' => 'db-info',
+			'secondary' => 'main-index'
+
+		]);
+
+	}
+
+	function index() {
+		if ( $this->firstRun) {
 			$this->dbinfo();
 
 		}
 		else {
-			$this->render([
-				'title' => $this->title = sys::name(),
-				'primary' => 'readme',
-				'secondary' => ['ledger/index', 'transactions/index', 'main-index']
-
-			]);
+			$this->isPost() ?
+				$this->postHandler() :
+				$this->_index();
 
 		}
 
@@ -108,26 +121,19 @@ class home extends Controller {
 
 	}
 
-	public function dbinfo() {
-		$this->render([
-			'title' => 'dbinfo',
-			'primary' => 'db-info',
-			'secondary' => 'main-index'
-
-		]);
-
-	}
-
 	function info() {
-		/* default setting
+		/**
+		 * default setting
+		 *
 		 * in case you forget to disable this on a production server
 		 * - only running on localhost
 		 */
-		if ( Request::ServerIsLocal()) {
+
+		if ( $this->Request->ServerIsLocal()) {
 			$this->render([
-				'title' => 'hello world',
+				'title' => 'info',
 				'primary' => 'info',
-				'secondary' =>'blank'
+				'secondary' => 'main-index'
 			]);
 
 		}
